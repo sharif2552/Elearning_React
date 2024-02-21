@@ -14,7 +14,7 @@ export default function Login() {
             <div className="flex items-center xl:p-10">
               <form className="flex flex-col w-full h-full pb-6 text-center bg-white rounded-3xl">
                 <h3 className="mb-3 text-4xl font-extrabold text-dark-grey-900">
-                  Sign In
+                  Sign Up
                 </h3>
                 <p className="mb-4 text-grey-700">
                   Enter your email and password
@@ -30,11 +30,31 @@ export default function Login() {
                   />
                   Sign in with Google
                 </a>
-                <div className="flex items-center mb-3">
-                  <hr className="h-0 border-b border-solid border-grey-500 grow" />
-                  <p className="mx-4 text-grey-600">or</p>
-                  <hr className="h-0 border-b border-solid border-grey-500 grow" />
-                </div>
+                <label
+                  htmlFor="name"
+                  className="mb-2 text-sm text-start text-grey-900"
+                >
+                  Name*
+                </label>
+                <input
+                  id="name"
+                  type="name"
+                  placeholder="Kamal"
+                  className="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-grey-400 mb-7 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl"
+                />
+                <label
+                  htmlFor="username"
+                  className="mb-2 text-sm text-start text-grey-900"
+                >
+                  Username*
+                </label>
+                <input
+                  id="username"
+                  type="username"
+                  placeholder="kamal1234"
+                  className="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-grey-400 mb-7 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl"
+                />
+
                 <label
                   htmlFor="email"
                   className="mb-2 text-sm text-start text-grey-900"
@@ -59,7 +79,25 @@ export default function Login() {
                   placeholder="Enter a password"
                   className="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl"
                 />
-                <div className="flex flex-row justify-center mb-8">
+                <div className="flex flex-row justify-between mb-8">
+                  <label className="relative inline-flex items-center mr-3 cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      checked
+                      value=""
+                      className="sr-only peer"
+                    />
+                    <div className="w-5 h-5 bg-white border-2 rounded-sm border-grey-500 peer peer-checked:border-0 peer-checked:bg-purple-blue-500">
+                      <img
+                        className=""
+                        src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/icons/check.png"
+                        alt="tick"
+                      />
+                    </div>
+                    <span className="ml-3 text-sm font-normal text-grey-900">
+                      Keep me logged in
+                    </span>
+                  </label>
                   <a
                     href="#"
                     className="mr-4 text-sm font-medium text-purple-blue-500"
@@ -68,12 +106,12 @@ export default function Login() {
                   </a>
                 </div>
                 <button className="w-full px-6 py-5 mb-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-purple-blue-600 focus:ring-4 focus:ring-purple-blue-100 bg-purple-blue-500">
-                  Sign In
+                  Sign Up
                 </button>
                 <p className="text-sm leading-relaxed text-grey-900">
-                  Not registered yet?{" "}
-                  <Link to={'signup'} className="font-bold text-grey-700">
-                    Create an Account
+                  Have an account?{" "}
+                  <Link to={"/"} className="font-bold text-grey-700">
+                    Sign In
                   </Link>
                 </p>
               </form>
@@ -81,7 +119,6 @@ export default function Login() {
           </div>
         </div>
       </div>
-
     </div>
   );
 }
