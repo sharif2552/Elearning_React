@@ -3,15 +3,17 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import TestComponent from "../components/TestComponent";
-
+import Navbar from "../components/Navbar";
+import Carousel from "../components/Carousel";
 
 const Quiz = () => {
     return (
-        <div>
-            quiz page
-            <TestComponent />
+      <div>
+        <Navbar />
+        <div className=' flex flex-row justify-center'>
+          <Carousel />
         </div>
+      </div>
     );
 };
 
