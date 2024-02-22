@@ -2,37 +2,40 @@ import React from "react";
 import { Outlet, Link } from "react-router-dom";
 import {auth} from '../firebase/config';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {useNavigate} from "react-router-dom";
 export default function Login() {
-  const [userCredentials, setUserCredentials] = React.useState({ });
-  
+  const [userCredentials, setUserCredentials] = React.useState({});
+  const navigate = useNavigate(); // Get the history object
+
   const handleChange = (e) => {
     setUserCredentials({
       ...userCredentials,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
     console.log(userCredentials);
-    
+  };
+
+  function handleSignup(e) {
+    e.preventDefault(); // Prevent the default form submission
+    createUserWithEmailAndPassword(
+      auth,
+      userCredentials.email,
+      userCredentials.password
+    )
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        console.log(user);
+         navigate("/login");
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        // ..
+      });
   }
-
-function handleSignup(e) {
-  e.preventDefault(); // Prevent the default form submission
-createUserWithEmailAndPassword(auth, userCredentials.email, userCredentials.password)
-  .then((userCredential) => {
-    // Signed up
-    const user = userCredential.user;
-    console.log(user);
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(errorCode, errorMessage);
-    // ..
-  });
-}
-
-
-
 
   return (
     <div>

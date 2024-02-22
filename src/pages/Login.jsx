@@ -1,9 +1,46 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
 import {auth} from '../firebase/config';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import {useNavigate} from "react-router-dom";
 
 export default function Login() {
-  console.log(auth);
+  
+  const [userCredentials, setUserCredentials] = React.useState({});
+  const navigate = useNavigate(); // Get the history object
+
+  const handleChange = (e) => {
+    setUserCredentials({
+      ...userCredentials,
+      [e.target.name]: e.target.value,
+    });
+    console.log(userCredentials);
+  };
+
+  function handleSignin(e) {
+    e.preventDefault(); // Prevent the default form submission
+    signInWithEmailAndPassword(
+      auth,
+      userCredentials.email,
+      userCredentials.password
+    )
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        console.log("signin complete", user);
+        navigate("/quiz");
+        
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        // ..
+      });
+  }
+
+
   return (
     <div>
       <link
@@ -46,6 +83,8 @@ export default function Login() {
                 <input
                   id="email"
                   type="email"
+                  name="email"
+                  onChange={handleChange}
                   placeholder="mail@loopple.com"
                   className="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-grey-400 mb-7 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl"
                 />
@@ -58,6 +97,8 @@ export default function Login() {
                 <input
                   id="password"
                   type="password"
+                  name="password"
+                  onChange={handleChange}
                   placeholder="Enter a password"
                   className="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl"
                 />
@@ -69,12 +110,13 @@ export default function Login() {
                     Forget password?
                   </a>
                 </div>
-                <button className="w-full px-6 py-5 mb-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-purple-blue-600 focus:ring-4 focus:ring-purple-blue-100 bg-purple-blue-500">
+                <button onClick={handleSignin}
+                 className="w-full px-6 py-5 mb-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-purple-blue-600 focus:ring-4 focus:ring-purple-blue-100 bg-purple-blue-500">
                   Sign In
                 </button>
                 <p className="text-sm leading-relaxed text-grey-900">
                   Not registered yet?{" "}
-                  <Link to={'/signup'} className="font-bold text-grey-700">
+                  <Link to={"/signup"} className="font-bold text-grey-700">
                     Create an Account
                   </Link>
                 </p>
@@ -83,7 +125,6 @@ export default function Login() {
           </div>
         </div>
       </div>
-
     </div>
   );
 }
