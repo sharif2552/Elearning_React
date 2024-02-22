@@ -1,7 +1,9 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
+import {auth} from '../firebase/config';
 
 export default function Login() {
+  console.log(auth);
   return (
     <div>
       <link
@@ -72,7 +74,7 @@ export default function Login() {
                 </button>
                 <p className="text-sm leading-relaxed text-grey-900">
                   Not registered yet?{" "}
-                  <Link to={'signup'} className="font-bold text-grey-700">
+                  <Link to={'/signup'} className="font-bold text-grey-700">
                     Create an Account
                   </Link>
                 </p>
