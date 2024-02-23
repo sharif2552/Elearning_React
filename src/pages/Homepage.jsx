@@ -12,11 +12,15 @@ import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { faBook } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
+
 import "../assets/css/homepage.css";
 import "../assets/img/courses.jpg";
 import aboutUs from "../assets/img/courses.jpg";
+import CyberSecurity from "../assets/img/CyberSecurity.jpg";
+import DataScience from "../assets/img/dataScience.jpg";
+import programming from "../assets/img/programming.jpg";
+import FooterComponent from "../components/FooterComponent";
 
-import { ArrowBack } from "@mui/icons-material";
 
 const Homepage = () => {
   return (
@@ -87,7 +91,9 @@ const Homepage = () => {
         <h1 className=" mt-5 text-3xl text-secondary-replyOrange-900">
           About Us{" "}
         </h1>
-        <h2 className=" mt-2 text-5xl text-primary-replyBlue-800  ">Welcome to Elearning</h2>
+        <h2 className=" mt-2 text-5xl text-primary-replyBlue-800  ">
+          Welcome to Elearning
+        </h2>
         <h3 className=" mt-7 text-xl ">
           Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu
           diam amet diam et eos. Clita erat ipsum et lorem et sit
@@ -139,27 +145,44 @@ const Homepage = () => {
       </div>
 
       {/* End of about us section */}
-    <div className=" mx-5 mt-28 ">
-      <div>
-        <img src={aboutUs} alt="" />
+
+      {/* Courses Categories */}
+      <div className=" mx-5 mt-28 space-y-12 ">
+        <div>
+          <h1 className="text-3xl text-secondary-replyOrange-900">
+            Our Courses
+          </h1>
+          <h2 className="text-5xl text-primary-replyBlue-800  ">
+            Choose Your Course
+          </h2>
+        </div>
+
+        <div className="space-y-3">
+          <div className="relative">
+            <img src={CyberSecurity} alt="" />
+            <h2 className="absolute top-0 right-0 text-white text-4xl  px-4 py-2">
+              Cyber Security
+            </h2>
+          </div>
+          <div className="relative">
+            <img src={programming} alt="" />
+            <h2 className="absolute top-0 right-0 text-white text-4xl  px-4 py-2">
+              Cyber Security
+            </h2>
+          </div>
+          <div className="relative">
+            <img src={DataScience} alt="" />
+            <h2 className="absolute top-0 right-0 text-white  text-4xl px-4 py-2">
+              Cyber Security
+            </h2>
+          </div>
+        </div>
       </div>
-      <div>
 
+      {/* End of Courses Categories */}
+      <div className=" mt-5">
+        <FooterComponent />
       </div>
-    </div>
-
-    {/* Courses categories */}
-
-
-
-    {/* End of Courses Categories */}
-
-
-    
-
-
-
-
     </div>
   );
 };
