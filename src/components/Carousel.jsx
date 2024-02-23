@@ -16,12 +16,12 @@ const images = [
   {
     label: "Course 1",
     imgPath:
-      "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&h=500&q=60",
+      "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&h=800&q=60",
   },
   {
     label: "Course 2",
     imgPath:
-      "https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?auto=format&fit=crop&w=800&h=500",
+      "https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?auto=format&fit=crop&w=1200&h=800",
   },
   {
     label: "Course 3",
@@ -53,20 +53,8 @@ function SwipeableTextMobileStepper() {
   };
 
   return (
-    <Box sx={{ maxWidth: 1000, flexGrow: 1 }}>
-      <Paper
-        square
-        elevation={0}
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          height: 50,
-          pl: 2,
-          bgcolor: "background.default",
-        }}
-      >
-        <Typography>{images[activeStep].label}</Typography>
-      </Paper>
+    <Box sx={{ maxWidth: 1530, flexGrow: 1 }}>
+
       <AutoPlaySwipeableViews
         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
         index={activeStep}
@@ -77,17 +65,41 @@ function SwipeableTextMobileStepper() {
           <div key={step.label}>
             {Math.abs(activeStep - index) <= 2 ? (
               <Box
-                component="img"
                 sx={{
-                  maxHeight: 500,
+                  position: "relative",
+                  maxHeight: 600,
                   display: "block",
-
                   overflow: "hidden",
                   width: "100%",
+                  objectFit: "cover",
                 }}
-                src={step.imgPath}
-                alt={step.label}
-              />
+              >
+                <img
+                  src={step.imgPath}
+                  alt={step.label}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+                <Typography
+                  variant="h5"
+                  component="div"
+                  sx={{
+                    position: "absolute",
+                    bottom: 0,
+                    left: 0,
+                    width: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.5)",
+                    color: "white",
+                    padding: "8px",
+                    textAlign: "center",
+                  }}
+                >
+                  {step.label}
+                </Typography>
+              </Box>
             ) : null}
           </div>
         ))}
