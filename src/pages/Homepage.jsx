@@ -30,7 +30,7 @@ import training from "../assets/img/trainingimg/training.svg";
 import redbg from "../assets/img/background/redbg.png";
 import star from "../assets/img/gift-card/star.png";
 import charecter from "../assets/img/background/char.png";
-
+import pythonimg from "../assets/img/part 7/pythonimg.png"
 const Homepage = () => {
   return (
     <div>
@@ -428,7 +428,7 @@ const Homepage = () => {
               </h1>
               <div className=" mt-4">
                 {" "}
-                <div className=" flex flex-row space-x-3 mt-5">
+                <div className=" flex flex-row  space-x-3 mt-5">
                   <img className=" h-5 w-5" src={star} alt="" />
                   <h2 className=" text-white">
                     Students don’t get lost in the grid view and have a
@@ -451,7 +451,7 @@ const Homepage = () => {
                 </div>
               </div>
             </div>
-            <div>
+            <div className=" flex flex-row justify-center">
               <img src={charecter} alt="" />
             </div>
             <div></div>
@@ -460,8 +460,56 @@ const Homepage = () => {
       </div>
 
       {/* part 6 end */}
+      {/* part 7 */}
+      <div className=" part3 mt-20">
+        <div className="Courses-Category text-secondary-replyGreen-900 text-4xl text-center font-bold">
+          Exclusive Bundles
+        </div>
 
+        <div className=" my-2 font-raleway font-light text-secondary-textColor-900 text-xl text-center px-20  py-10">
+          <h1>
+            {" "}
+            Onlearing is one powerful online software suite that combines all
+            the tools needed to run a successful school or office.
+          </h1>
+        </div>
+        <div className=" px-6 flex flex-row justify-center flex-wrap my-2 space-x-20 space-y-5 ">
+          {/* course Category 1 */}
+          <div className=" w-2/4 mt-5 lg:flex lg:flex-row">
+            <img className=" w-full rounded-t-2xl" src={rectangle} alt="" />
+            <div className=" px-4 pb-5 border">
+              <h1 className=" text-secondary-replyGreen-900 text-xl font-bold mt-2">
+                Product Management Basic - Course
+              </h1>
+              <p className=" my-2 font-raleway font-light text-secondary-textColor-900 text-sm">
+                Product Management Masterclass, you will learn with Sarah
+                Johnson - Head of Product Customer Platform Gojek Indonesia.
+              </p>
+
+              <div className=" flex flex-row justify-between">
+                <div className=" text-secondary-replyOrange-900 text-2xl font-bold">
+                  {" "}
+                  $370
+                </div>
+                <div className=" bg-secondary-replyGreen-900 py-3 px-5 rounded-md text-white">
+                  Enroll Now
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+        <div className=" flex flex-row justify-center my-16">
+          <div className=" border  w-fit rounded-xl border-secondary-replyGreen-900 px-7 py-3 text-secondary-replyGreen-900 hover:bg-secondary-replyGreen-900 hover:text-white transition duration-300 ease-in-out">
+            View all
+          </div>
+        </div>
+      </div>
+      {/* part 7 end */}
+      {/* carousel */}
       
+
       <div className="mt-5">
         <FooterComponent />
       </div>
