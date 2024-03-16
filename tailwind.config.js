@@ -18,7 +18,7 @@ module.exports = {
             900: "#fd661f",
           },
           replyRed: {
-            900: "#fd661f",
+            900: "#df1c25",
           },
           replyGreen: {
             900: "#0b7077",

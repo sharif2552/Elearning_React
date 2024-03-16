@@ -27,8 +27,9 @@ import img1 from "../assets/img/buttonimg/img1.png";
 import img2 from "../assets/img/buttonimg/img2.png";
 import img3 from "../assets/img/buttonimg/img3.png";
 import training from "../assets/img/trainingimg/training.svg";
-import redbg from "../assets/img/background/redbg.png"
-
+import redbg from "../assets/img/background/redbg.png";
+import star from "../assets/img/gift-card/star.png";
+import charecter from "../assets/img/background/char.png";
 
 const Homepage = () => {
   return (
@@ -295,9 +296,9 @@ const Homepage = () => {
       </div>
       {/* part 3 end*/}
       {/* part4 start */}
-      <div className=" part4 relative lg:flex flex-row justify-between px-10">
+      <div className=" part4 relative lg:flex flex-row justify-between px-9 lg:px-36">
         <div className="  ">
-          <h1 className=" absolute top-0 left-10 bg-gray-100 px-5 py-2 rounded-md">
+          <h1 className=" absolute top-0 left-30 bg-gray-100 px-5 py-2 rounded-md">
             Benefits
           </h1>
           <h1 className=" pt-20 pb-20 text-secondary-replyGreen-900 text-4xl font-bold ">
@@ -348,14 +349,14 @@ const Homepage = () => {
             </div>
           </div>
         </div>
-        <div className=" lg:w-1/2">
+        <div className=" ">
           <img className="  h-auto" src={studentid} alt="studentid" />
         </div>
       </div>
       {/* part 4 end */}
       {/* part 5  */}
       <div>
-        <div className="lg:flex flex-row-reverse justify-between mt-20 ">
+        <div className="lg:flex flex-row-reverse justify-between mt-20 px-10 lg:px-40 ">
           <div className="">
             <div className="text-center lg:text-left">
               <div className="bg-sky-100 px-5 py-2 rounded-lg inline-block">
@@ -416,12 +417,51 @@ const Homepage = () => {
         </div>
       </div>
       {/* part 5 end  */}
-      
+
       {/* part 6 */}
-      <div className="">
-        <img src={redbg} alt="" />
+      <div className=" mt-20 flex justify-center">
+        <div className=" bg-secondary-replyRed-900 w-4/5 py-10 px-10 rounded-xl">
+          <div className=" lg:flex flex-row  ">
+            <div className=" lg:w-2/3 flex flex-col justify-center">
+              <h1 className=" text-white text-3xl lg:text-5xl font-bold">
+                Why You should buy gift cards ?
+              </h1>
+              <div className=" mt-4">
+                {" "}
+                <div className=" flex flex-row space-x-3 mt-5">
+                  <img className=" h-5 w-5" src={star} alt="" />
+                  <h2 className=" text-white">
+                    Students don’t get lost in the grid view and have a
+                    dedicated Podium space.
+                  </h2>
+                </div>
+                <div className=" flex flex-row space-x-3 mt-5">
+                  <img className=" h-5 w-5" src={star} alt="" />
+                  <h2 className=" text-white">
+                    Students don’t get lost in the grid view and have a
+                    dedicated Podium space.
+                  </h2>
+                </div>
+                <div className=" flex flex-row space-x-3 mt-5">
+                  <img className=" h-5 w-5" src={star} alt="" />
+                  <h2 className=" text-white">
+                    Students don’t get lost in the grid view and have a
+                    dedicated Podium space.
+                  </h2>
+                </div>
+              </div>
+            </div>
+            <div>
+              <img src={charecter} alt="" />
+            </div>
+            <div></div>
+          </div>
+        </div>
       </div>
+
       {/* part 6 end */}
+
+      
       <div className="mt-5">
         <FooterComponent />
       </div>
