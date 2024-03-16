@@ -475,7 +475,7 @@ const Homepage = () => {
         </div>
         <div className=" px-6 flex flex-row justify-center flex-wrap my-2 space-x-20 space-y-5 ">
           {/* course Category 1 */}
-          <div className=" w-2/4 mt-5 lg:flex lg:flex-row">
+          <div className=" w-3/4 mt-5 lg:flex lg:flex-row">
             <img className=" w-full rounded-t-2xl" src={rectangle} alt="" />
             <div className=" px-4 pb-5 border">
               <h1 className=" text-secondary-replyGreen-900 text-xl font-bold mt-2">
