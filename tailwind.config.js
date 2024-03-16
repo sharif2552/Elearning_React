@@ -3,19 +3,28 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        raleway: ["Raleway", "sans-serif"],
+      },
       colors: {
         primary: {
           replyBlue: {
-            600: "#4A6572",
-            700: "#344955",
-            800: "#232F34",
-
+            600: "#d2e6e4",
+            900: "#d2e6e4",
           },
-
         },
         secondary: {
           replyOrange: {
-            900 : "#F9AA33",
+            900: "#fd661f",
+          },
+          replyRed: {
+            900: "#fd661f",
+          },
+          replyGreen: {
+            900: "#0b7077",
+          },
+          textColor: {
+            900: "#4D4D4D",
           },
         },
       },

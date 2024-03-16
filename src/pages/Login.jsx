@@ -28,7 +28,7 @@ export default function Login() {
         // Signed up
         const user = userCredential.user;
         console.log("signin complete", user);
-        navigate("/quiz");
+        navigate("/homepage");
         
         // ...
       })

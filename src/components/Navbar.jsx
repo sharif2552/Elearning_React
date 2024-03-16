@@ -1,174 +1,112 @@
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
+import React, { useState } from "react";
+import { HiMenu, HiX } from "react-icons/hi";
+import logo from "../assets/img/navbar/logo.png";
 
-import { createTheme } from "@mui/material/styles";
-import { deepPurple } from "@mui/material/colors";
+const Navbar = () => {
+  const [showMenu, setShowMenu] = useState(false);
 
-const pages = ["Quiz", "Doubts", "Articles"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
-const theme = createTheme({
-  palette: {
-    palette: {
-      primary: deepPurple,
-      secondary: {
-        main: "#673ab7",
-      },
-    },
-  },
-});
-
-function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+  const toggleMenu = () => {
+    setShowMenu(!showMenu);
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#111827" }}>
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "white",
-              textDecoration: "none",
-            }}
-          >
-            LOGO
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
+    <div>
+      <div
+        className="fixed top-0 left-0 w-full h-full z-50 bg-black opacity-50 backdrop-filter backdrop-blur-md"
+        style={{ display: showMenu ? "block" : "none" }}
+        onClick={toggleMenu}
+      ></div>
+      <div
+        className="fixed top-0 left-0 w-full h-full z-50 flex justify-center items-center"
+        style={{ display: showMenu ? "flex" : "none" }}
+      >
+        <div className=" bg-transparent max-w-full backdrop-filter backdrop-blur-md flex align-middle justify-center w-full h-full text-center  rounded-md p-4 shadow-lg">
+          <div className="flex flex-col items-center justify-center space-y-4 mt-8">
+            <a
+              href="#"
+              className="text-white text-3xl font-raleway hover:text-secondary-replyOrange-900"
             >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
+              Home
+            </a>
+            <a
+              href="#"
+              className="text-white text-3xl font-raleway hover:text-secondary-replyOrange-900"
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "white",
-              textDecoration: "none",
-            }}
-          >
-            LOGO
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
+              Courses
+            </a>
+            <a
+              href="#"
+              className="text-white text-3xl font-raleway hover:text-secondary-replyOrange-900"
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+              Blog
+            </a>
+            <a
+              href="#"
+              className="text-white text-3xl font-raleway hover:text-secondary-replyOrange-900"
+            >
+              About Us
+            </a>
+          </div>
+        </div>
+      </div>
+      <div className="fixed top-0 left-0 w-full z-50 bg-transparent backdrop-filter backdrop-blur-md">
+        <nav className="container mx-auto flex justify-between p-2 ">
+          <div className="flex items-center space-x-5">
+            <img src={logo} alt="logo" className="w-20 h-20" />
+            <h1 className="text-black text-4xl font-bold font-raleway">
+              EduWise
+            </h1>
+          </div>
+          <div className="flex items-center space-x-5 lg:hidden">
+            <button
+              className="text-secondary-replyGreen-900 font bg-white px-4 py-2 rounded-md"
+              onClick={toggleMenu}
+            >
+              {showMenu ? (
+                <HiX className="h-6 w-6 ease-in-out" />
+              ) : (
+                <HiMenu className="h-6 w-6 ease-in-out" />
+              )}
+            </button>
+          </div>
+          <div className="hidden lg:flex items-center space-x-5 backdrop-filter backdrop-blur-md">
+            <a
+              href="#"
+              className="text-black hover:text-secondary-replyOrange-900 text-xl"
+            >
+              Home
+            </a>
+            <a
+              href="#"
+              className="text-black hover:text-secondary-replyOrange-900 text-xl"
+            >
+              Courses
+            </a>
+            <a
+              href="#"
+              className="text-black hover:text-secondary-replyOrange-900 text-xl"
+            >
+              Blog
+            </a>
+            <a
+              href="#"
+              className="text-black hover:text-secondary-replyOrange-900 text-xl"
+            >
+              About Us
+            </a>
+          </div>
+          <div className="hidden lg:flex items-center space-x-5">
+            <button className="text-secondary-replyGreen-900 font-raleway bg-white px-7 py-3 rounded-md">
+              Log In
+            </button>
+            <button className=" bg-secondary-replyGreen-900 font-raleway text-white px-7 py-3 rounded-md">
+              Register
+            </button>
+          </div>
+        </nav>
+      </div>
+    </div>
   );
-}
-export default ResponsiveAppBar;
+};
+
+export default Navbar;
