@@ -22,6 +22,13 @@ import dumble from "../assets/img/category/dumble.png";
 import lipstick from "../assets/img/category/lipstrick.png";
 import bun from "../assets/img/category/bun.png";
 import vaccine from "../assets/img/category/Vaccine.png";
+import studentid from "../assets/img/studentid/studentid.svg";
+import img1 from "../assets/img/buttonimg/img1.png";
+import img2 from "../assets/img/buttonimg/img2.png";
+import img3 from "../assets/img/buttonimg/img3.png";
+import training from "../assets/img/trainingimg/training.svg";
+import redbg from "../assets/img/background/redbg.png"
+
 
 const Homepage = () => {
   return (
@@ -51,7 +58,6 @@ const Homepage = () => {
         </div>
       </div>
       {/* part 1 end */}
-
       {/* part 2 */}
       <div className=" part-2  pt-9">
         <div className="popular-courses flex justify-center font-poppins font-bold text-secondary-replyOrange-900 text-3xl">
@@ -194,7 +200,7 @@ const Homepage = () => {
         </div>
         <div className=" px-6 flex flex-row justify-center flex-wrap my-2 space-x-5 space-y-5 ">
           {/* course Category 1 */}
-          <div className=" w-80 border  flex flex-col items-center justify-center px-3 py-5 hover:bg-gray-100  transition duration-300 ease-in-out">
+          <div className=" w-80 border  flex flex-col items-center justify-center px-3 py-5 hover:bg-gray-100  transition duration-300 ease-in-out mt-5">
             <div className=" w-16 h-16 bg-sky-200 rounded-full ">
               <img
                 className=" w-14 h-auto  lg:h-auto"
@@ -282,14 +288,140 @@ const Homepage = () => {
           <div></div>
         </div>
         <div className=" flex flex-row justify-center my-16">
-          <div className=" border  w-fit rounded-xl border-secondary-replyGreen-900 px-7 py-3 text-secondary-replyGreen-900">
+          <div className=" border  w-fit rounded-xl border-secondary-replyGreen-900 px-7 py-3 text-secondary-replyGreen-900 hover:bg-secondary-replyGreen-900 hover:text-white transition duration-300 ease-in-out">
             View all
           </div>
         </div>
       </div>
-
       {/* part 3 end*/}
+      {/* part4 start */}
+      <div className=" part4 relative lg:flex flex-row justify-between px-10">
+        <div className="  ">
+          <h1 className=" absolute top-0 left-10 bg-gray-100 px-5 py-2 rounded-md">
+            Benefits
+          </h1>
+          <h1 className=" pt-20 pb-20 text-secondary-replyGreen-900 text-4xl font-bold ">
+            Get Student ID card
+          </h1>
+          <div className=" space-y-8 mb-16">
+            <div>
+              <div className=" lg:flex flex-row items-center space-x-3 space-y-3">
+                <div className=" flex justify-center  ">
+                  {" "}
+                  <img className="  h-10 w-10" src={img1} alt="" />{" "}
+                </div>
 
+                {/* Adjust height and width as needed */}
+                <h3 className="text-center">
+                  TA’s and presenters can be moved to the front of the class.
+                </h3>
+              </div>
+            </div>
+            <div>
+              <div className=" lg:flex flex-row items-center space-x-3 space-y-3">
+                <div className=" flex justify-center  ">
+                  {" "}
+                  <img className="  h-10 w-10" src={img2} alt="" />{" "}
+                </div>
+
+                {/* Adjust height and width as needed */}
+                <h3 className="text-center">
+                  Teachers can easily see all students and class data at one
+                  time.
+                </h3>
+              </div>
+            </div>
+
+            <div>
+              <div className=" lg:flex flex-row items-center space-x-3 space-y-3">
+                <div className=" flex justify-center  ">
+                  {" "}
+                  <img className="  h-10 w-10" src={img3} alt="" />{" "}
+                </div>
+
+                {/* Adjust height and width as needed */}
+                <h3 className="text-center">
+                  Teachers don’t get lost in the grid view and have a dedicated
+                  Podium space.
+                </h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className=" lg:w-1/2">
+          <img className="  h-auto" src={studentid} alt="studentid" />
+        </div>
+      </div>
+      {/* part 4 end */}
+      {/* part 5  */}
+      <div>
+        <div className="lg:flex flex-row-reverse justify-between mt-20 ">
+          <div className="">
+            <div className="text-center lg:text-left">
+              <div className="bg-sky-100 px-5 py-2 rounded-lg inline-block">
+                Training
+              </div>
+              <h1 className="text-secondary-replyOrange-900 font-bold font-raleway text-4xl mt-10 lg:mt-0">
+                Staff training
+              </h1>
+            </div>
+            <div className=" space-y-8 mb-16 mt-10">
+              <div>
+                <div className=" lg:flex flex-row items-center space-x-3 space-y-3">
+                  <div className=" flex justify-center  ">
+                    {" "}
+                    <img className="  h-10 w-10" src={img1} alt="" />{" "}
+                  </div>
+
+                  {/* Adjust height and width as needed */}
+                  <h3 className="text-center">
+                    TA’s and presenters can be moved to the front of the class.
+                  </h3>
+                </div>
+              </div>
+              <div>
+                <div className=" lg:flex flex-row items-center space-x-3 space-y-3">
+                  <div className=" flex justify-center  ">
+                    {" "}
+                    <img className="  h-10 w-10" src={img2} alt="" />{" "}
+                  </div>
+
+                  {/* Adjust height and width as needed */}
+                  <h3 className="text-center">
+                    Teachers can easily see all students and class data at one
+                    time.
+                  </h3>
+                </div>
+              </div>
+
+              <div>
+                <div className=" lg:flex flex-row items-center space-x-3 space-y-3">
+                  <div className=" flex justify-center  ">
+                    {" "}
+                    <img className="  h-10 w-10" src={img3} alt="" />{" "}
+                  </div>
+
+                  {/* Adjust height and width as needed */}
+                  <h3 className="text-center">
+                    Teachers don’t get lost in the grid view and have a
+                    dedicated Podium space.
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="flex justify-center lg:justify-end">
+            <img src={training} alt="" />
+          </div>
+        </div>
+      </div>
+      {/* part 5 end  */}
+      
+      {/* part 6 */}
+      <div className="">
+        <img src={redbg} alt="" />
+      </div>
+      {/* part 6 end */}
       <div className="mt-5">
         <FooterComponent />
       </div>
