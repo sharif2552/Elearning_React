@@ -11,7 +11,7 @@ const Carousel = () => {
     const newTranslateValue = -100 * percent;
     setTranslateValue(newTranslateValue);
   };
-
+ 
   return (
     <div className="slider-container overflow-hidden w-full relative">
       <div
