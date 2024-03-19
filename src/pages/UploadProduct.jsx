@@ -3,19 +3,20 @@ import axios from "axios";
 
 const UploadProduct = () => {
   const [formData, setFormData] = useState({
-    name: "",
+    title: "",
     description: "",
     price: "",
     image: null,
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+const handleChange = (e) => {
+  const { name, value } = e.target;
+  setFormData({
+    ...formData,
+    [name]: value,
+  });
+};
+
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -28,9 +29,9 @@ const UploadProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { name, description, price, image } = formData;
+      const { title, description, price, image } = formData;
       const formDataToSend = new FormData();
-      formDataToSend.append("name", name);
+      formDataToSend.append("title", title);
       formDataToSend.append("description", description);
       formDataToSend.append("price", price);
       formDataToSend.append("image", image);
@@ -51,7 +52,7 @@ const response = await axios.post(
 
       // Optionally, reset the form fields after successful upload
       setFormData({
-        name: "",
+        title: "",
         description: "",
         price: "",
         image: null,
@@ -75,8 +76,8 @@ const response = await axios.post(
           <input
             type="text"
             id="name"
-            name="name"
-            value={formData.name}
+            name="title"
+            value={formData.title}
             onChange={handleChange}
             className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
           />
