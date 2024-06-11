@@ -1,11 +1,9 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
-import {auth} from '../firebase/config';
-import { signInWithEmailAndPassword } from "firebase/auth";
-import {useNavigate} from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-  
   const [userCredentials, setUserCredentials] = React.useState({});
   const navigate = useNavigate(); // Get the history object
 
@@ -17,29 +15,26 @@ export default function Login() {
     console.log(userCredentials);
   };
 
-  function handleSignin(e) {
+  const handleSignin = async (e) => {
     e.preventDefault(); // Prevent the default form submission
-    signInWithEmailAndPassword(
-      auth,
-      userCredentials.email,
-      userCredentials.password
-    )
-      .then((userCredential) => {
-        // Signed up
-        const user = userCredential.user;
-        console.log("signin complete", user);
-        navigate("/homepage");
-        
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-        // ..
-      });
-  }
-
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        userCredentials
+      );
+      console.log("signin complete", response.data);
+      navigate("/homepage");
+    } catch (error) {
+      if (error.response) {
+        console.error("Error response:", error.response.data);
+      } else if (error.request) {
+        console.error("Error request:", error.request);
+      } else {
+        console.error("Error message:", error.message);
+      }
+      console.error("Error config:", error.config);
+    }
+  };
 
   return (
     <div>
@@ -60,7 +55,7 @@ export default function Login() {
                 </p>
                 <a
                   className="flex items-center justify-center w-full py-4 mb-6 text-sm font-medium transition duration-300 rounded-2xl text-grey-900 bg-grey-300 hover:bg-grey-400 focus:ring-4 focus:ring-grey-300"
-                  href="    "
+                  href="#"
                 >
                   <img
                     className="h-5 mr-2"
@@ -110,8 +105,10 @@ export default function Login() {
                     Forget password?
                   </a>
                 </div>
-                <button onClick={handleSignin}
-                 className="w-full px-6 py-5 mb-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-purple-blue-600 focus:ring-4 focus:ring-purple-blue-100 bg-purple-blue-500">
+                <button
+                  onClick={handleSignin}
+                  className="w-full px-6 py-5 mb-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-purple-blue-600 focus:ring-4 focus:ring-purple-blue-100 bg-purple-blue-500"
+                >
                   Sign In
                 </button>
                 <p className="text-sm leading-relaxed text-grey-900">

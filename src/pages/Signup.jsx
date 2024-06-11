@@ -1,11 +1,11 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
-import {auth} from '../firebase/config';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import {useNavigate} from "react-router-dom";
-export default function Login() {
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+export default function Register() {
   const [userCredentials, setUserCredentials] = React.useState({});
-  const navigate = useNavigate(); // Get the history object
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setUserCredentials({
@@ -15,27 +15,30 @@ export default function Login() {
     console.log(userCredentials);
   };
 
-  function handleSignup(e) {
-    e.preventDefault(); // Prevent the default form submission
-    createUserWithEmailAndPassword(
-      auth,
-      userCredentials.email,
-      userCredentials.password
-    )
-      .then((userCredential) => {
-        // Signed up
-        const user = userCredential.user;
-        console.log(user);
-         navigate("/login");
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-        // ..
-      });
-  }
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/register",
+        userCredentials
+      );
+      console.log(response.data); // Logging the response data
+      navigate("/login");
+    } catch (error) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error("Error response:", error.response.data);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error("Error request:", error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error("Error message:", error.message);
+      }
+      console.error("Error config:", error.config);
+    }
+  };
 
   return (
     <div>
@@ -91,7 +94,6 @@ export default function Login() {
                   placeholder="kamal1234"
                   className="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-grey-400 mb-7 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl"
                 />
-
                 <label
                   htmlFor="email"
                   className="mb-2 text-sm text-start text-grey-900"
