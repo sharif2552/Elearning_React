@@ -4,19 +4,22 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const [userCredentials, setUserCredentials] = React.useState({});
-  const navigate = useNavigate(); // Get the history object
+  const [userCredentials, setUserCredentials] = React.useState({
+    email: "",
+    password: "",
+  });
+  const [errorMessage, setErrorMessage] = React.useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setUserCredentials({
       ...userCredentials,
       [e.target.name]: e.target.value,
     });
-    console.log(userCredentials);
   };
 
   const handleSignin = async (e) => {
-    e.preventDefault(); // Prevent the default form submission
+    e.preventDefault();
     try {
       const response = await axios.post(
         "http://localhost:5000/api/auth/login",
@@ -26,11 +29,12 @@ export default function Login() {
       navigate("/homepage");
     } catch (error) {
       if (error.response) {
-        console.error("Error response:", error.response.data);
+        // Assuming the server returns a message in the response data
+        setErrorMessage(error.response.data.message || "Invalid credentials");
       } else if (error.request) {
-        console.error("Error request:", error.request);
+        setErrorMessage("No response from the server. Please try again.");
       } else {
-        console.error("Error message:", error.message);
+        setErrorMessage("An error occurred. Please try again.");
       }
       console.error("Error config:", error.config);
     }
@@ -46,7 +50,10 @@ export default function Login() {
         <div className="flex justify-center align-middle w-full h-full my-auto xl:gap-14 lg:justify-normal md:gap-5 draggable">
           <div className="flex items-center justify-center w-full lg:p-12">
             <div className="flex items-center xl:p-10">
-              <form className="flex flex-col w-full h-full pb-6 text-center bg-white rounded-3xl">
+              <form
+                className="flex flex-col w-full h-full pb-6 text-center bg-white rounded-3xl"
+                onSubmit={handleSignin}
+              >
                 <h3 className="mb-3 text-4xl font-extrabold text-dark-grey-900">
                   Sign In
                 </h3>
@@ -69,6 +76,9 @@ export default function Login() {
                   <p className="mx-4 text-grey-600">or</p>
                   <hr className="h-0 border-b border-solid border-grey-500 grow" />
                 </div>
+                {errorMessage && (
+                  <div className="mb-4 text-red-500">{errorMessage}</div>
+                )}
                 <label
                   htmlFor="email"
                   className="mb-2 text-sm text-start text-grey-900"
@@ -79,6 +89,7 @@ export default function Login() {
                   id="email"
                   type="email"
                   name="email"
+                  value={userCredentials.email}
                   onChange={handleChange}
                   placeholder="mail@loopple.com"
                   className="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-grey-400 mb-7 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl"
@@ -93,6 +104,7 @@ export default function Login() {
                   id="password"
                   type="password"
                   name="password"
+                  value={userCredentials.password}
                   onChange={handleChange}
                   placeholder="Enter a password"
                   className="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl"
@@ -106,7 +118,7 @@ export default function Login() {
                   </a>
                 </div>
                 <button
-                  onClick={handleSignin}
+                  type="submit"
                   className="w-full px-6 py-5 mb-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-purple-blue-600 focus:ring-4 focus:ring-purple-blue-100 bg-purple-blue-500"
                 >
                   Sign In
