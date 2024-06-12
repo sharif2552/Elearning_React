@@ -2,6 +2,8 @@ import React from "react";
 import { Outlet, Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext"; // Make sure the path is correct
 
 export default function Login() {
   const [userCredentials, setUserCredentials] = React.useState({
@@ -10,6 +12,7 @@ export default function Login() {
   });
   const [errorMessage, setErrorMessage] = React.useState("");
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext); // Get the login function from AuthContext
 
   const handleChange = (e) => {
     setUserCredentials({
@@ -26,10 +29,11 @@ export default function Login() {
         userCredentials
       );
       console.log("signin complete", response.data);
+      localStorage.setItem("token", response.data.token); // Store the token in localStorage
+      login(response.data.token); // Update the AuthContext
       navigate("/homepage");
     } catch (error) {
       if (error.response) {
-        // Assuming the server returns a message in the response data
         setErrorMessage(error.response.data.message || "Invalid credentials");
       } else if (error.request) {
         setErrorMessage("No response from the server. Please try again.");
