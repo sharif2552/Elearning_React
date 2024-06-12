@@ -1,19 +1,27 @@
+// Import necessary modules from React and other libraries
 import React from "react";
-import { Outlet, Link } from "react-router-dom";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext"; // Make sure the path is correct
+import { Outlet, Link } from "react-router-dom"; // Used for navigation and linking
+import axios from "axios"; // For making HTTP requests
+import { useNavigate } from "react-router-dom"; // For programmatic navigation
+import { useContext } from "react"; // To use the AuthContext
+import { AuthContext } from "../context/AuthContext"; // Import the AuthContext (make sure the path is correct)
 
+// Define a functional component called Login
 export default function Login() {
+  // Define state variables for user credentials and error message
   const [userCredentials, setUserCredentials] = React.useState({
     email: "",
     password: "",
   });
   const [errorMessage, setErrorMessage] = React.useState("");
-  const navigate = useNavigate();
-  const { login } = useContext(AuthContext); // Get the login function from AuthContext
 
+  // Get the navigate function to navigate programmatically
+  const navigate = useNavigate();
+
+  // Get the login function from the AuthContext
+  const { login } = useContext(AuthContext);
+
+  // Function to handle input changes and update state
   const handleChange = (e) => {
     setUserCredentials({
       ...userCredentials,
@@ -21,18 +29,27 @@ export default function Login() {
     });
   };
 
+  // Function to handle form submission for signing in
   const handleSignin = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent the default form submission behavior
     try {
+      // Make a POST request to the login API with user credentials
       const response = await axios.post(
         "http://localhost:5000/api/auth/login",
         userCredentials
       );
       console.log("signin complete", response.data);
-      localStorage.setItem("token", response.data.token); // Store the token in localStorage
-      login(response.data.token); // Update the AuthContext
+
+      // Store the received token in localStorage
+      localStorage.setItem("token", response.data.token);
+
+      // Update the AuthContext with the token
+      login(response.data.token);
+
+      // Navigate to the homepage after successful login
       navigate("/homepage");
     } catch (error) {
+      // Handle errors from the API response
       if (error.response) {
         setErrorMessage(error.response.data.message || "Invalid credentials");
       } else if (error.request) {
@@ -44,8 +61,10 @@ export default function Login() {
     }
   };
 
+  // Return the JSX for the login form
   return (
     <div>
+      {/* Link to an external CSS stylesheet */}
       <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/gh/Loopple/loopple-public-assets@main/motion-tailwind/motion-tailwind.css"
@@ -54,6 +73,7 @@ export default function Login() {
         <div className="flex justify-center align-middle w-full h-full my-auto xl:gap-14 lg:justify-normal md:gap-5 draggable">
           <div className="flex items-center justify-center w-full lg:p-12">
             <div className="flex items-center xl:p-10">
+              {/* Form for user login */}
               <form
                 className="flex flex-col w-full h-full pb-6 text-center bg-white rounded-3xl"
                 onSubmit={handleSignin}
@@ -80,9 +100,11 @@ export default function Login() {
                   <p className="mx-4 text-grey-600">or</p>
                   <hr className="h-0 border-b border-solid border-grey-500 grow" />
                 </div>
+                {/* Display error message if any */}
                 {errorMessage && (
                   <div className="mb-4 text-red-500">{errorMessage}</div>
                 )}
+                {/* Input field for email */}
                 <label
                   htmlFor="email"
                   className="mb-2 text-sm text-start text-grey-900"
@@ -98,6 +120,7 @@ export default function Login() {
                   placeholder="mail@loopple.com"
                   className="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-grey-400 mb-7 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl"
                 />
+                {/* Input field for password */}
                 <label
                   htmlFor="password"
                   className="mb-2 text-sm text-start text-grey-900"
@@ -121,6 +144,7 @@ export default function Login() {
                     Forget password?
                   </a>
                 </div>
+                {/* Submit button for the form */}
                 <button
                   type="submit"
                   className="w-full px-6 py-5 mb-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-purple-blue-600 focus:ring-4 focus:ring-purple-blue-100 bg-purple-blue-500"
