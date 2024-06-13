@@ -8,6 +8,9 @@ import { AuthContext } from "../context/AuthContext"; // Import the AuthContext 
 
 // Define a functional component called Login
 export default function Login() {
+    const googleLogin = () => {
+      window.location.href = "http://localhost:5000/api/auth/google";
+    };
   // Define state variables for user credentials and error message
   const [userCredentials, setUserCredentials] = React.useState({
     email: "",
@@ -93,7 +96,9 @@ export default function Login() {
                     src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/logos/logo-google.png"
                     alt=""
                   />
-                  Sign in with Google
+                  <div>
+                    <button onClick={googleLogin}>Login with Google</button>
+                  </div>
                 </a>
                 <div className="flex items-center mb-3">
                   <hr className="h-0 border-b border-solid border-grey-500 grow" />
