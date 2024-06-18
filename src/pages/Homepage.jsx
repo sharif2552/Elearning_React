@@ -31,6 +31,10 @@ import redbg from "../assets/img/background/redbg.png";
 import star from "../assets/img/gift-card/star.png";
 import charecter from "../assets/img/background/char.png";
 import pythonimg from "../assets/img/part 7/pythonimg.png"
+import { Link } from "react-router-dom";
+
+
+
 const Homepage = () => {
   return (
     <div>
@@ -47,7 +51,14 @@ const Homepage = () => {
             <h1>Grow up your skills by online courses with Onlearning</h1>
           </div>
           <div className=" bg-secondary-replyOrange-900 mt-5 text-white w-fit rounded-md px-4 py-2 ">
-            <button>Explore Path</button>
+            <button>
+              <Link
+                to="/course-list"
+              >Explore Path
+                
+              </Link>
+              
+            </button>
           </div>
         </div>
         <div className=" flex justify-center md:absolute  right-24 bottom-0">
@@ -497,8 +508,6 @@ const Homepage = () => {
               </div>
             </div>
           </div>
-
-
         </div>
         <div className=" flex flex-row justify-center my-16">
           <div className=" border  w-fit rounded-xl border-secondary-replyGreen-900 px-7 py-3 text-secondary-replyGreen-900 hover:bg-secondary-replyGreen-900 hover:text-white transition duration-300 ease-in-out">
@@ -508,7 +517,6 @@ const Homepage = () => {
       </div>
       {/* part 7 end */}
       {/* carousel */}
-      
 
       <div className="mt-5">
         <FooterComponent />

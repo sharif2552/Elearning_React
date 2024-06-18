@@ -35,12 +35,13 @@ const Navbar = () => {
             >
               Home
             </a>
-            <a
-              href="#"
+
+            <Link
+              to="/course-list"
               className="text-white text-3xl font-raleway hover:text-secondary-replyOrange-900"
             >
               Courses
-            </a>
+            </Link>
             <a
               href="#"
               className="text-white text-3xl font-raleway hover:text-secondary-replyOrange-900"
@@ -77,30 +78,30 @@ const Navbar = () => {
             </button>
           </div>
           <div className="hidden lg:flex items-center space-x-5 backdrop-filter backdrop-blur-md">
-            <a
-              href="#"
+            <Link
+              to="/"
               className="text-black hover:text-secondary-replyOrange-900 text-xl"
             >
               Home
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to="/course-list"
               className="text-black hover:text-secondary-replyOrange-900 text-xl"
             >
               Courses
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to="/blog"
               className="text-black hover:text-secondary-replyOrange-900 text-xl"
             >
               Blog
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to="/about-us"
               className="text-black hover:text-secondary-replyOrange-900 text-xl"
             >
               About Us
-            </a>
+            </Link>
           </div>
           <div className="hidden lg:flex items-center space-x-5">
             <Link
