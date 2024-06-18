@@ -10,6 +10,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import AuthProvider from "./context/AuthContext";
 import Logout from "./components/Logout";
 import "./App.css";
+import AddCourse from "./components/AddCourse";
+import CourseList from "./components/CourseList";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +46,15 @@ const router = createBrowserRouter([
     path: "/logout",
     element: <Logout />,
   },
+
+  {
+    path: "/add-course",
+    element: <AddCourse />,
+  },
+  {
+    path: "/",
+    element: <CourseList />,
+  }
 ]);
 
 function App() {
