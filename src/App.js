@@ -27,7 +27,7 @@ const router = createBrowserRouter([
     element: <Quiz />,
   },
   {
-    path: "/homepage",
+    path: "/",
     element: (
       <ProtectedRoute>
         <Homepage />
@@ -52,7 +52,7 @@ const router = createBrowserRouter([
     element: <AddCourse />,
   },
   {
-    path: "/",
+    path: "/course-list",
     element: <CourseList />,
   }
 ]);
