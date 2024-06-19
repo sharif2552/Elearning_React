@@ -50,7 +50,7 @@ export default function Login() {
       login(response.data.token);
 
       // Navigate to the homepage after successful login
-      navigate("/homepage");
+      navigate("/");
     } catch (error) {
       // Handle errors from the API response
       if (error.response) {
