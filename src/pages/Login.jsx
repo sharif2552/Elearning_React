@@ -142,12 +142,12 @@ export default function Login() {
                   className="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl"
                 />
                 <div className="flex flex-row justify-center mb-8">
-                  <a
-                    href="#"
+                  <Link
+                    to="/forget-password"
                     className="mr-4 text-sm font-medium text-purple-blue-500"
                   >
                     Forget password?
-                  </a>
+                  </Link>
                 </div>
                 {/* Submit button for the form */}
                 <button

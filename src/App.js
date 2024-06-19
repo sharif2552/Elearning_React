@@ -15,6 +15,8 @@ import CourseList from "./components/CourseList";
 import AboutUs from "./pages/Aboutus";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import ForgetPassword from "./pages/PasswordResetForm";
+import ForgetPasswordPage from "./pages/PasswordResetPage";
 
 const router = createBrowserRouter([
   {
@@ -71,6 +73,16 @@ const router = createBrowserRouter([
     path: "/blog/:id",
     element: <BlogPost />,
   },
+
+  {
+    path: "/forget-password",
+    element: <ForgetPassword />
+  },
+  {
+    path: "/reset-password/:token",
+    element: <ForgetPasswordPage />
+  },
+  
 
 ]);
 
