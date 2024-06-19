@@ -1,0 +1,8 @@
+{
+  "build": {
+    "env": {
+      "NODE_ENV": "production"
+    },
+    "command": "npm install --force && npm run build"
+  }
+}
