@@ -12,6 +12,9 @@ import Logout from "./components/Logout";
 import "./App.css";
 import AddCourse from "./components/AddCourse";
 import CourseList from "./components/CourseList";
+import AboutUs from "./pages/Aboutus";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 
 const router = createBrowserRouter([
   {
@@ -54,7 +57,21 @@ const router = createBrowserRouter([
   {
     path: "/course-list",
     element: <CourseList />,
-  }
+  },
+  {
+    path: "/about-us",
+    element: <AboutUs />,
+  },
+  {
+    path: "/blog",
+    element: <Blog />,
+  },
+  
+  {
+    path: "/blog/:id",
+    element: <BlogPost />,
+  },
+
 ]);
 
 function App() {
