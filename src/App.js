@@ -43,10 +43,10 @@ const router = createBrowserRouter([
     path: "/upload",
     element: <UploadProduct />,
   },
-  {
-    path: "/products",
-    element: <ProductsList />,
-  },
+  // {
+  //   path: "/products",
+  //   element: <ProductsList />,
+  // },
   {
     path: "/logout",
     element: <Logout />,

@@ -1,4 +1,5 @@
 import React from "react";
+import Navbar from "../components/Navbar";
 
 const Blog = () => {
   // Example blog data; replace with your actual data fetching logic
@@ -33,45 +34,50 @@ const Blog = () => {
   ];
 
   return (
-    <div className="bg-gray-100 py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">
-            Blog
-          </h2>
-          <p className="mt-1 text-4xl font-extrabold text-gray-900 sm:tracking-tight lg:text-5xl">
-            Latest Articles
-          </p>
-        </div>
+    <div>
+      <div className=" mb-11">
+        <Navbar />
+      </div>
+      <div className="bg-gray-100 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className=" text-7xl text-indigo-600 font-semibold tracking-wide uppercase">
+              Blog
+            </h2>
+            <p className="mt-1 text-4xl font-extrabold text-gray-900 sm:tracking-tight lg:text-5xl">
+              Latest Articles
+            </p>
+          </div>
 
-        <div className="mt-12 grid gap-8 lg:grid-cols-3 lg:gap-16">
-          {blogPosts.map((post) => (
-            <div
-              key={post.id}
-              className="flex flex-col bg-white shadow-xl rounded-lg p-8"
-            >
-              <img
-                className="h-48 w-full object-cover rounded-lg"
-                src={post.imageUrl}
-                alt={post.title}
-              />
-              <h3 className="mt-6 text-2xl font-bold text-gray-900">
-                {post.title}
-              </h3>
-              <p className="mt-4 text-lg text-gray-500">{post.excerpt}</p>
-              <div className="mt-6">
-                <a
-                  href={`/blog/${post.id}`}
-                  className="text-indigo-600 hover:text-indigo-900 font-semibold"
-                >
-                  Read more
-                </a>
+          <div className="mt-12 grid gap-8 lg:grid-cols-3 lg:gap-16">
+            {blogPosts.map((post) => (
+              <div
+                key={post.id}
+                className="flex flex-col bg-white shadow-xl rounded-lg p-8"
+              >
+                <img
+                  className="h-48 w-full object-cover rounded-lg"
+                  src={post.imageUrl}
+                  alt={post.title}
+                />
+                <h3 className="mt-6 text-2xl font-bold text-gray-900">
+                  {post.title}
+                </h3>
+                <p className="mt-4 text-lg text-gray-500">{post.excerpt}</p>
+                <div className="mt-6">
+                  <a
+                    href={`/blog/${post.id}`}
+                    className="text-indigo-600 hover:text-indigo-900 font-semibold"
+                  >
+                    Read more
+                  </a>
+                </div>
+                <div className="mt-4 text-gray-400 text-sm">
+                  <span>{post.author}</span> | <span>{post.date}</span>
+                </div>
               </div>
-              <div className="mt-4 text-gray-400 text-sm">
-                <span>{post.author}</span> | <span>{post.date}</span>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>
