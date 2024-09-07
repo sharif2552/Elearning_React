@@ -10,7 +10,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import AuthProvider from "./context/AuthContext";
 import Logout from "./components/Logout";
 import "./App.css";
-import AddCourse from "./components/AddCourse";
+import AddCourse from "./components/AdminPanel";
 import CourseList from "./components/CourseList";
 import AboutUs from "./pages/Aboutus";
 import Blog from "./pages/Blog";
@@ -53,7 +53,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/add-course",
+    path: "/admin",
     element: <AddCourse />,
   },
   {
