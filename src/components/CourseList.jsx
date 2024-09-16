@@ -41,13 +41,14 @@ const CourseList = () => {
               <div className="p-4">
                 <h2 className="text-xl font-semibold mb-2">{course.name}</h2>
                 <p className="text-gray-700 mb-4">{course.description}</p>
-                <p className="text-lg font-bold">${course.price}</p>
+
                 <p className="text-gray-700 mb-2">
                   Instructor: {course.instructor}
                 </p>
                 <p className="text-gray-700 mb-2">
                   Duration: {course.duration}
                 </p>
+                <p className="text-lg font-bold">${course.price}</p>
 
                 <Link
                   to={`/course/${course._id}`}

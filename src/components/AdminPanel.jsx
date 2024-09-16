@@ -166,24 +166,6 @@ const AdminPanel = () => {
             />
           </div>
 
-          {/* Price Field */}
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="price"
-            >
-              Price:
-            </label>
-            <input
-              type="number"
-              id="price"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              required
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-
           {/* Instructor Field */}
           <div className="mb-4">
             <label
@@ -215,6 +197,23 @@ const AdminPanel = () => {
               id="duration"
               value={duration}
               onChange={(e) => setDuration(e.target.value)}
+              required
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          {/* Price Field */}
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="price"
+            >
+              Price:
+            </label>
+            <input
+              type="number"
+              id="price"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
               required
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
@@ -282,7 +281,9 @@ const AdminPanel = () => {
               <h3 className="text-xl font-bold mb-2">{course.name}</h3>
               <p className="text-gray-700 mb-2">{course.description}</p>
               <p className="text-gray-700 mb-2">Price: ${course.price}</p>
-              <p className="text-gray-700 mb-2">Instructor: {course.instructor}</p>
+              <p className="text-gray-700 mb-2">
+                Instructor: {course.instructor}
+              </p>
               <p className="text-gray-700 mb-2">Duration: {course.duration}</p>
               <div className="mt-4 flex space-x-4">
                 <button
