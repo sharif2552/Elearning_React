@@ -7,6 +7,8 @@ const AdminPanel = () => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState(null);
+  const [instructor, setInstructor] = useState(""); // New instructor field
+  const [duration, setDuration] = useState("");     // New duration field
   const [imagePreview, setImagePreview] = useState(null); // To display the current image preview
   const [isEditing, setIsEditing] = useState(false); // To track whether we are editing a course
   const [currentCourseId, setCurrentCourseId] = useState(null); // ID of the course being edited
@@ -33,6 +35,8 @@ const AdminPanel = () => {
     formData.append("name", name);
     formData.append("description", description);
     formData.append("price", price);
+    formData.append("instructor", instructor); // Include instructor in form data
+    formData.append("duration", duration);     // Include duration in form data
 
     // Only append image if a new image is selected
     if (image) {
@@ -84,7 +88,9 @@ const AdminPanel = () => {
     setName(course.name);
     setDescription(course.description);
     setPrice(course.price);
-    setImagePreview(course.image); // Show current image preview
+    setInstructor(course.instructor); // Set instructor field when editing
+    setDuration(course.duration);     // Set duration field when editing
+    setImagePreview(course.image);    // Show current image preview
     setIsEditing(true);
     setCurrentCourseId(course._id);
   };
@@ -94,6 +100,8 @@ const AdminPanel = () => {
     setName("");
     setDescription("");
     setPrice("");
+    setInstructor("");  // Reset instructor
+    setDuration("");    // Reset duration
     setImage(null);
     setImagePreview(null); // Reset the image preview
     setIsEditing(false);
@@ -122,6 +130,8 @@ const AdminPanel = () => {
           <h2 className="text-2xl font-bold mb-6 text-center">
             {isEditing ? "Edit Course" : "Add Course"}
           </h2>
+
+          {/* Name Field */}
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -138,6 +148,8 @@ const AdminPanel = () => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
+
+          {/* Description Field */}
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -153,6 +165,8 @@ const AdminPanel = () => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
+
+          {/* Price Field */}
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -169,6 +183,44 @@ const AdminPanel = () => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
+
+          {/* Instructor Field */}
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="instructor"
+            >
+              Instructor:
+            </label>
+            <input
+              type="text"
+              id="instructor"
+              value={instructor}
+              onChange={(e) => setInstructor(e.target.value)}
+              required
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+
+          {/* Duration Field */}
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="duration"
+            >
+              Duration:
+            </label>
+            <input
+              type="text"
+              id="duration"
+              value={duration}
+              onChange={(e) => setDuration(e.target.value)}
+              required
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+
+          {/* Image Field */}
           <div className="mb-6">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -191,6 +243,8 @@ const AdminPanel = () => {
               className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
             />
           </div>
+
+          {/* Submit Button */}
           <div className="flex items-center justify-between">
             <button
               type="submit"
@@ -211,43 +265,42 @@ const AdminPanel = () => {
         </form>
       </div>
 
-      {/* List of Courses */}
-      <div className=" text-5xl text-center text-blue-500 mb-10">
-        <h2>List of Courses</h2>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        {courses.map((course) => (
-          <div
-            key={course._id}
-            className="bg-white rounded-lg shadow-md overflow-hidden"
-          >
-            <img
-              src={course.image}
-              alt={course.name}
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-4">
-              <h2 className="text-xl font-semibold mb-2">{course.name}</h2>
-              <p className="text-gray-700 mb-4">{course.description}</p>
-              <p className="text-lg font-bold">${course.price}</p>
-              <div className="flex justify-between">
+      {/* Display Courses */}
+      <div>
+        <h2 className="text-2xl font-bold mb-6">Courses List</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {courses.map((course) => (
+            <div
+              key={course._id}
+              className="bg-white shadow-md rounded p-6 flex flex-col items-center"
+            >
+              <img
+                src={course.image}
+                alt={course.name}
+                className="w-32 h-32 object-cover mb-4"
+              />
+              <h3 className="text-xl font-bold mb-2">{course.name}</h3>
+              <p className="text-gray-700 mb-2">{course.description}</p>
+              <p className="text-gray-700 mb-2">Price: ${course.price}</p>
+              <p className="text-gray-700 mb-2">Instructor: {course.instructor}</p>
+              <p className="text-gray-700 mb-2">Duration: {course.duration}</p>
+              <div className="mt-4 flex space-x-4">
                 <button
                   onClick={() => handleEdit(course)}
-                  className="bg-yellow-500 text-white px-4 py-2 rounded"
+                  className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 >
                   Edit
                 </button>
                 <button
                   onClick={() => handleDelete(course._id)}
-                  className="bg-red-500 text-white px-4 py-2 rounded"
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 >
                   Delete
                 </button>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
