@@ -12,6 +12,7 @@ import Logout from "./components/Logout";
 import "./App.css";
 import AddCourse from "./components/AdminPanel";
 import CourseList from "./components/CourseList";
+import CourseDetail from "./components/CourseDetail";
 import AboutUs from "./pages/Aboutus";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
     path: "/course-list",
     element: <CourseList />,
   },
+   {
+path: "/course/:id",
+element: <CourseDetail />,
+   },
   {
     path: "/about-us",
     element: <AboutUs />,
@@ -82,6 +87,7 @@ const router = createBrowserRouter([
     path: "/reset-password/:token",
     element: <ForgetPasswordPage />
   },
+
   
 
 ]);

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./Navbar";
 
@@ -20,7 +21,7 @@ const CourseList = () => {
 
   return (
     <div>
-      <div className=" mb-32">
+      <div className="mb-32">
         <Navbar />
       </div>
 
@@ -41,6 +42,12 @@ const CourseList = () => {
                 <h2 className="text-xl font-semibold mb-2">{course.name}</h2>
                 <p className="text-gray-700 mb-4">{course.description}</p>
                 <p className="text-lg font-bold">${course.price}</p>
+                <Link
+                  to={`/course/${course._id}`}
+                  className="text-blue-500 underline mt-4 inline-block"
+                >
+                  View Details
+                </Link>
               </div>
             </div>
           ))}
