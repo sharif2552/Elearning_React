@@ -31,7 +31,7 @@ const CourseList = () => {
           {courses.map((course) => (
             <div
               key={course._id}
-              className="bg-white rounded-lg shadow-md overflow-hidden"
+              className="bg-white rounded-lg shadow-md overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-lg"
             >
               <img
                 src={course.image}
@@ -52,7 +52,7 @@ const CourseList = () => {
 
                 <Link
                   to={`/course/${course._id}`}
-                  className="text-blue-500 underline mt-4 inline-block"
+                  className="text-blue-500 underline mt-4 inline-block transition duration-300 ease-in-out transform hover:text-blue-700 hover:underline hover:scale-105"
                 >
                   View Details
                 </Link>
