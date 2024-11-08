@@ -8,9 +8,10 @@ import { AuthContext } from "../context/AuthContext"; // Import the AuthContext 
 
 // Define a functional component called Login
 export default function Login() {
-    const googleLogin = () => {
-      window.location.href = "http://localhost:5000/api/auth/google";
-    };
+  const googleLogin = () => {
+    window.location.href = `${process.env.REACT_APP_BASE_URL}api/auth/google`;
+  };
+
   // Define state variables for user credentials and error message
   const [userCredentials, setUserCredentials] = React.useState({
     email: "",
@@ -38,7 +39,7 @@ export default function Login() {
     try {
       // Make a POST request to the login API with user credentials
       const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        `${process.env.REACT_APP_BASE_URL}api/auth/login`,
         userCredentials
       );
       console.log("signin complete", response.data);

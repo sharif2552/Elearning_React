@@ -7,7 +7,7 @@ export default function Register() {
   const navigate = useNavigate();
 
   const googleLogin = () => {
-    window.location.href = "http://localhost:5000/api/auth/google";
+    window.location.href = `${process.env.REACT_APP_BASE_URL}api/auth/google`;
   };
 
   const handleChange = (e) => {
@@ -22,7 +22,7 @@ export default function Register() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        `${process.env.REACT_APP_BASE_URL}api/auth/register`,
         userCredentials
       );
       console.log(response.data); // Logging the response data
