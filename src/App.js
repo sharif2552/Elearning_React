@@ -21,6 +21,7 @@ import ForgetPassword from "./pages/PasswordResetForm";
 import ForgetPasswordPage from "./pages/PasswordResetPage";
 import AdminPanel from "./pages/AdminPanel";
 import Profile from "./pages/Profile";
+import ResumeBuilder from "./pages/ResumeBuilder";
 
 const router = createBrowserRouter([
   { path: "/login", element: <Login /> },
@@ -65,6 +66,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <CourseList />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/resume-builder",
+    element: (
+      <ProtectedRoute>
+        <ResumeBuilder />
       </ProtectedRoute>
     ),
   },

@@ -57,6 +57,12 @@ const Navbar = () => {
               Courses
             </Link>
             <Link
+              to="/resume-builder"
+              className="text-white text-3xl font-raleway hover:text-secondary-replyOrange-900"
+            >
+              Resume Builder
+            </Link>
+            <Link
               to="/blog"
               className="text-white text-3xl font-raleway hover:text-secondary-replyOrange-900"
             >
@@ -118,6 +124,12 @@ const Navbar = () => {
               className="text-black hover:text-secondary-replyOrange-900 text-xl"
             >
               Courses
+            </Link>
+            <Link
+              to="/resume-builder"
+              className="text-black hover:text-secondary-replyOrange-900 text-xl"
+            >
+              Resume Builder
             </Link>
             <Link
               to="/blog"

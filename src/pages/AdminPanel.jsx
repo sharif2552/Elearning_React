@@ -19,6 +19,7 @@ const AdminPanel = () => {
     price: "",
     instructor: "",
     duration: "",
+    level: "Beginner",
     image: null,
     imagePreview: null,
   });
@@ -78,26 +79,60 @@ const AdminPanel = () => {
 
   const handleCourseSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    Object.keys(courseForm).forEach((key) => {
-      if (key !== "imagePreview" && courseForm[key] !== null) {
-        formData.append(key, courseForm[key]);
-      }
-    });
-
     try {
-      if (courseForm._id) {
+      const formData = new FormData();
+      formData.append("name", courseForm.name);
+      formData.append("description", courseForm.description);
+      formData.append("price", courseForm.price);
+      formData.append("instructor", courseForm.instructor);
+      formData.append("duration", courseForm.duration);
+      formData.append("level", courseForm.level);
+      if (courseForm.image) {
+        formData.append("image", courseForm.image);
+      }
+
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("Please log in to create a course");
+        return;
+      }
+
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      if (selectedCourse) {
         await axios.put(
-          `http://localhost:5000/api/courses/${courseForm._id}`,
-          formData
+          `http://localhost:5000/api/courses/${selectedCourse._id}`,
+          formData,
+          config
         );
       } else {
-        await axios.post("http://localhost:5000/api/courses", formData);
+        await axios.post("http://localhost:5000/api/courses", formData, config);
       }
+
+      setCourseForm({
+        name: "",
+        description: "",
+        price: "",
+        instructor: "",
+        duration: "",
+        level: "Beginner",
+        image: null,
+        imagePreview: null,
+      });
+      setSelectedCourse(null);
       fetchCourses();
-      resetCourseForm();
     } catch (error) {
       console.error("Error saving course:", error);
+      if (error.response?.status === 401) {
+        alert("Your session has expired. Please log in again.");
+      } else {
+        alert("Error saving course. Please try again.");
+      }
     }
   };
 
@@ -230,6 +265,7 @@ const AdminPanel = () => {
       price: "",
       instructor: "",
       duration: "",
+      level: "Beginner",
       image: null,
       imagePreview: null,
     });
@@ -362,6 +398,21 @@ const AdminPanel = () => {
                 />
               </div>
               <div className="mb-4">
+                <label className="block text-sm font-medium mb-2">Level</label>
+                <select
+                  value={courseForm.level}
+                  onChange={(e) =>
+                    setCourseForm({ ...courseForm, level: e.target.value })
+                  }
+                  className="w-full p-2 border rounded"
+                  required
+                >
+                  <option value="Beginner">Beginner</option>
+                  <option value="Intermediate">Intermediate</option>
+                  <option value="Advanced">Advanced</option>
+                </select>
+              </div>
+              <div className="mb-4">
                 <label className="block text-sm font-medium mb-2">
                   Course Image
                 </label>
@@ -389,7 +440,7 @@ const AdminPanel = () => {
                 type="submit"
                 className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
               >
-                {courseForm._id ? "Update Course" : "Add Course"}
+                {selectedCourse ? "Update Course" : "Add Course"}
               </button>
             </form>
           </div>
@@ -403,7 +454,10 @@ const AdminPanel = () => {
                   <p className="text-sm text-gray-600">{course.description}</p>
                   <div className="mt-2 flex space-x-2">
                     <button
-                      onClick={() => setCourseForm(course)}
+                      onClick={() => {
+                        setCourseForm(course);
+                        setSelectedCourse(course);
+                      }}
                       className="text-blue-500 hover:text-blue-700"
                     >
                       Edit
