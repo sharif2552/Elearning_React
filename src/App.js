@@ -11,8 +11,8 @@ import AuthProvider from "./context/AuthContext";
 import Logout from "./components/Logout";
 import "./App.css";
 
-import CourseList from "./components/CourseList";
-import CourseDetail from "./components/CourseDetail";
+import CourseList from "./pages/CourseList";
+import CourseDetail from "./pages/CourseDetail";
 import AboutUs from "./pages/Aboutus";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
@@ -48,6 +48,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <Profile />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/courses",
+    element: (
+      <ProtectedRoute>
+        <CourseList />
       </ProtectedRoute>
     ),
   },

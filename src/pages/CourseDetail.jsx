@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import Navbar from "./Navbar";
+import Navbar from "../components/Navbar";
 
 const CourseDetail = () => {
   const { id } = useParams(); // Get the course ID from the route
@@ -49,7 +49,6 @@ const CourseDetail = () => {
               className="w-full h-full object-contain rounded-lg shadow-lg"
             />
           </div>
-
 
           {/* Course Information Section */}
           <div className="lg:w-3/5 w-full bg-white shadow-lg rounded-lg p-6 mb-8 lg:mb-0">
