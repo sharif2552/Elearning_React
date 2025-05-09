@@ -62,9 +62,9 @@ const AdminPanel = () => {
   const fetchQuizzes = async (courseId) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/courses/${courseId}/quizzes`
+        `http://localhost:5000/api/quizzes/course/${courseId}`
       );
-      setQuizzes(response.data);
+      setQuizzes(response.data.data);
     } catch (error) {
       console.error("Error fetching quizzes:", error);
     }
@@ -131,15 +131,44 @@ const AdminPanel = () => {
 
   const handleQuizSubmit = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Please log in to create quizzes");
+      return;
+    }
+
     try {
-      await axios.post(
-        `http://localhost:5000/api/courses/${quizForm.courseId}/quizzes`,
-        quizForm
-      );
+      // Transform the questions data to match the backend model
+      const transformedQuestions = quizForm.questions.map((q) => ({
+        question: q.text,
+        options: q.options.map((opt) => opt.text),
+        correctAnswer: q.options.findIndex((opt) => opt.isCorrect),
+      }));
+
+      const quizData = {
+        title: quizForm.title,
+        description: quizForm.description,
+        courseId: quizForm.courseId,
+        questions: transformedQuestions,
+        duration: 30, // Default duration in minutes
+        passingScore: 70, // Default passing score
+      };
+
+      await axios.post("http://localhost:5000/api/quizzes", quizData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      alert("Quiz created successfully!");
       fetchQuizzes(quizForm.courseId);
       resetQuizForm();
     } catch (error) {
       console.error("Error saving quiz:", error);
+      if (error.response?.status === 401) {
+        alert("Your session has expired. Please log in again.");
+      } else {
+        alert("Error creating quiz. Please try again.");
+      }
     }
   };
 

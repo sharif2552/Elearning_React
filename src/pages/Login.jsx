@@ -1,31 +1,20 @@
 // Import necessary modules from React and other libraries
-import React from "react";
-import { Outlet, Link } from "react-router-dom"; // Used for navigation and linking
+import React, { useState, useContext } from "react";
+import { Outlet, Link, useNavigate } from "react-router-dom"; // Used for navigation and linking
 import axios from "axios"; // For making HTTP requests
-import { useNavigate } from "react-router-dom"; // For programmatic navigation
-import { useContext } from "react"; // To use the AuthContext
 import { AuthContext } from "../context/AuthContext"; // Import the AuthContext (make sure the path is correct)
 
 // Define a functional component called Login
 export default function Login() {
-  const googleLogin = () => {
-    window.location.href = `${process.env.REACT_APP_BASE_URL}api/auth/google`;
-  };
-
-  // Define state variables for user credentials and error message
-  const [userCredentials, setUserCredentials] = React.useState({
+  const [userCredentials, setUserCredentials] = useState({
     email: "",
     password: "",
   });
-  const [errorMessage, setErrorMessage] = React.useState("");
-
-  // Get the navigate function to navigate programmatically
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-
-  // Get the login function from the AuthContext
   const { login } = useContext(AuthContext);
 
-  // Function to handle input changes and update state
   const handleChange = (e) => {
     setUserCredentials({
       ...userCredentials,
@@ -33,36 +22,39 @@ export default function Login() {
     });
   };
 
-  // Function to handle form submission for signing in
   const handleSignin = async (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
+    e.preventDefault();
+    setErrorMessage("");
+    setIsLoading(true);
+
     try {
-      // Make a POST request to the login API with user credentials
       const response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}api/auth/login`,
+        "http://localhost:5000/api/auth/login",
         userCredentials
       );
-      console.log("signin complete", response.data);
 
-      // Store the received token in localStorage
-      localStorage.setItem("token", response.data.token);
-
-      // Update the AuthContext with the token
-      login(response.data.token);
-
-      // Navigate to the homepage after successful login
-      navigate("/");
+      if (response.data.token) {
+        await login(response.data.token);
+        navigate("/");
+      } else {
+        setErrorMessage("Invalid response from server");
+      }
     } catch (error) {
-      // Handle errors from the API response
       if (error.response) {
         setErrorMessage(error.response.data.message || "Invalid credentials");
       } else if (error.request) {
-        setErrorMessage("No response from the server. Please try again.");
+        setErrorMessage("No response from server. Please try again.");
       } else {
         setErrorMessage("An error occurred. Please try again.");
       }
-      console.error("Error config:", error.config);
+      console.error("Login error:", error);
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  const googleLogin = () => {
+    window.location.href = "http://localhost:5000/api/auth/google";
   };
 
   // Return the JSX for the login form
@@ -88,19 +80,18 @@ export default function Login() {
                 <p className="mb-4 text-grey-700">
                   Enter your email and password
                 </p>
-                <a
+                <button
+                  type="button"
+                  onClick={googleLogin}
                   className="flex items-center justify-center w-full py-4 mb-6 text-sm font-medium transition duration-300 rounded-2xl text-grey-900 bg-grey-300 hover:bg-grey-400 focus:ring-4 focus:ring-grey-300"
-                  href="#"
                 >
                   <img
                     className="h-5 mr-2"
                     src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/logos/logo-google.png"
                     alt=""
                   />
-                  <div>
-                    <button onClick={googleLogin}>Login with Google</button>
-                  </div>
-                </a>
+                  Login with Google
+                </button>
                 <div className="flex items-center mb-3">
                   <hr className="h-0 border-b border-solid border-grey-500 grow" />
                   <p className="mx-4 text-grey-600">or</p>
@@ -125,6 +116,7 @@ export default function Login() {
                   onChange={handleChange}
                   placeholder="mail@loopple.com"
                   className="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-grey-400 mb-7 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl"
+                  required
                 />
                 {/* Input field for password */}
                 <label
@@ -141,6 +133,7 @@ export default function Login() {
                   onChange={handleChange}
                   placeholder="Enter a password"
                   className="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl"
+                  required
                 />
                 <div className="flex flex-row justify-center mb-8">
                   <Link
@@ -153,9 +146,10 @@ export default function Login() {
                 {/* Submit button for the form */}
                 <button
                   type="submit"
-                  className="w-full px-6 py-5 mb-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-purple-blue-600 focus:ring-4 focus:ring-purple-blue-100 bg-purple-blue-500"
+                  disabled={isLoading}
+                  className="w-full px-6 py-5 mb-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-purple-blue-600 focus:ring-4 focus:ring-purple-blue-100 bg-purple-blue-500 disabled:opacity-50"
                 >
-                  Sign In
+                  {isLoading ? "Signing in..." : "Sign In"}
                 </button>
                 <p className="text-sm leading-relaxed text-grey-900">
                   Not registered yet?{" "}

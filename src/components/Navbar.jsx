@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { HiMenu, HiX } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/img/navbar/logo.png";
+import { AuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Set default as false
-  const [userName, setUserName] = useState("John Doe"); // Example username, you can get this from context or props
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const { user, logout } = useContext(AuthContext);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -15,6 +17,15 @@ const Navbar = () => {
 
   const handleRegisterClick = () => {
     navigate("/signup");
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
+  const toggleProfileMenu = () => {
+    setShowProfileMenu(!showProfileMenu);
   };
 
   return (
@@ -33,31 +44,38 @@ const Navbar = () => {
       >
         <div className="bg-transparent max-w-full backdrop-filter backdrop-blur-md flex align-middle justify-center w-full h-full text-center rounded-md p-4 shadow-lg">
           <div className="flex flex-col items-center justify-center space-y-4 mt-8">
-            <a
-              href="#"
+            <Link
+              to="/"
               className="text-white text-3xl font-raleway hover:text-secondary-replyOrange-900"
             >
               Home
-            </a>
-
+            </Link>
             <Link
               to="/course-list"
               className="text-white text-3xl font-raleway hover:text-secondary-replyOrange-900"
             >
               Courses
             </Link>
-            <a
-              href="#"
+            <Link
+              to="/blog"
               className="text-white text-3xl font-raleway hover:text-secondary-replyOrange-900"
             >
               Blog
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to="/about-us"
               className="text-white text-3xl font-raleway hover:text-secondary-replyOrange-900"
             >
               About Us
-            </a>
+            </Link>
+            {user && (
+              <Link
+                to="/admin"
+                className="text-white text-3xl font-raleway hover:text-secondary-replyOrange-900"
+              >
+                Admin Panel
+              </Link>
+            )}
           </div>
         </div>
       </div>
@@ -115,27 +133,72 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Conditional rendering for Login/Register or User's name */}
+          {/* Conditional rendering for Login/Register or Profile */}
           <div className="hidden lg:flex items-center space-x-5">
-            {isLoggedIn ? (
-              <div className="text-black text-xl">
-                Welcome, <span className="font-bold">{userName}</span>
+            {user ? (
+              <div className="relative">
+                <button
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className="flex items-center text-gray-900 hover:text-secondary-replyGreen-900 focus:outline-none"
+                >
+                  <span className="mr-2">{user.name}</span>
+                  <svg
+                    className="h-5 w-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </button>
+                {isDropdownOpen && (
+                  <div className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                    <div className="py-1">
+                      <Link
+                        to="/profile"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        onClick={() => setIsDropdownOpen(false)}
+                      >
+                        Profile
+                      </Link>
+                      {user.role === "admin" && (
+                        <Link
+                          to="/admin"
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          onClick={() => setIsDropdownOpen(false)}
+                        >
+                          Admin Panel
+                        </Link>
+                      )}
+                      <button
+                        onClick={handleLogout}
+                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             ) : (
-              <>
+              <div className="flex space-x-4">
                 <Link
                   to="/login"
-                  className="text-secondary-replyGreen-900 font-raleway bg-white px-7 py-3 rounded-md"
+                  className="text-gray-900 hover:text-secondary-replyGreen-900"
                 >
-                  Log In
+                  Login
                 </Link>
-                <button
-                  className="bg-secondary-replyGreen-900 font-raleway text-white px-7 py-3 rounded-md"
-                  onClick={handleRegisterClick}
+                <Link
+                  to="/signup"
+                  className="bg-secondary-replyGreen-900 text-white px-4 py-2 rounded-md hover:bg-secondary-replyGreen-800"
                 >
                   Register
-                </button>
-              </>
+                </Link>
+              </div>
             )}
           </div>
         </nav>

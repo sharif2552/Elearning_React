@@ -1,5 +1,6 @@
 // Import React, createContext, useState, and useEffect from the React library
 import React, { createContext, useState, useEffect } from "react";
+import axios from "axios";
 
 // Create a new context called AuthContext
 export const AuthContext = createContext();
@@ -12,6 +13,24 @@ const AuthProvider = ({ children }) => {
   // Declare a state variable called loading and a function to update it, starting with true
   const [loading, setLoading] = useState(true);
 
+  const fetchUserData = async (token) => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/users/profile",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setUser({ ...response.data, token });
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      localStorage.removeItem("token");
+      setUser(null);
+    }
+  };
+
   // useEffect hook to run code when the component mounts
   useEffect(() => {
     // Get the token from local storage
@@ -19,7 +38,7 @@ const AuthProvider = ({ children }) => {
 
     // If there is a token, set the user state with the token
     if (token) {
-      setUser({ token });
+      fetchUserData(token);
     }
 
     // Set loading to false after checking the token
@@ -27,12 +46,12 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   // Function to handle user login
-  const login = (token) => {
+  const login = async (token) => {
     // Save the token in local storage
     localStorage.setItem("token", token);
 
     // Set the user state with the token
-    setUser({ token });
+    await fetchUserData(token);
   };
 
   // Function to handle user logout

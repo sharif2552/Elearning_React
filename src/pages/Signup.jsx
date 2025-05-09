@@ -25,7 +25,7 @@ export default function Register() {
         `${process.env.REACT_APP_BASE_URL}api/auth/register`,
         userCredentials
       );
-      console.log(response.data); // Logging the response data
+      console.log(response.data);
       navigate("/login");
     } catch (error) {
       if (error.response) {
@@ -123,6 +123,20 @@ export default function Register() {
                   name="password"
                   onChange={handleChange}
                   placeholder="Enter a password"
+                  className="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl"
+                />
+                <label
+                  htmlFor="adminKey"
+                  className="mb-2 text-sm text-start text-grey-900"
+                >
+                  Admin Key (Optional)
+                </label>
+                <input
+                  id="adminKey"
+                  type="password"
+                  name="adminKey"
+                  onChange={handleChange}
+                  placeholder="Enter admin key if you have one"
                   className="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl"
                 />
                 <button

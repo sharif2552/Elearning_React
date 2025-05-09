@@ -19,6 +19,7 @@ import BlogPost from "./pages/BlogPost";
 import ForgetPassword from "./pages/PasswordResetForm";
 import ForgetPasswordPage from "./pages/PasswordResetPage";
 import AdminPanel from "./pages/AdminPanel";
+import Profile from "./pages/Profile";
 
 const router = createBrowserRouter([
   {
@@ -57,7 +58,7 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: (
-      <ProtectedRoute>
+      <ProtectedRoute requireAdmin={true}>
         <AdminPanel />
       </ProtectedRoute>
     ),
@@ -91,6 +92,14 @@ const router = createBrowserRouter([
   {
     path: "/reset-password/:token",
     element: <ForgetPasswordPage />,
+  },
+  {
+    path: "/profile",
+    element: (
+      <ProtectedRoute>
+        <Profile />
+      </ProtectedRoute>
+    ),
   },
 ]);
 
