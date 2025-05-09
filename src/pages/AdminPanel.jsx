@@ -7,6 +7,10 @@ const AdminPanel = () => {
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [videos, setVideos] = useState([]);
   const [quizzes, setQuizzes] = useState([]);
+  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [showPreview, setShowPreview] = useState(false);
+  const [selectedQuiz, setSelectedQuiz] = useState(null);
+  const [showQuizPreview, setShowQuizPreview] = useState(false);
 
   // Course form states
   const [courseForm, setCourseForm] = useState({
@@ -26,6 +30,8 @@ const AdminPanel = () => {
     videoFile: null,
     courseId: "",
   });
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [isUploading, setIsUploading] = useState(false);
 
   // Quiz form states
   const [quizForm, setQuizForm] = useState({
@@ -109,11 +115,20 @@ const AdminPanel = () => {
       return;
     }
 
+    setIsUploading(true);
+    setUploadProgress(0);
+
     try {
       await axios.post("http://localhost:5000/api/videos/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
+        },
+        onUploadProgress: (progressEvent) => {
+          const percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          setUploadProgress(percentCompleted);
         },
       });
       alert("Video uploaded successfully!");
@@ -126,6 +141,9 @@ const AdminPanel = () => {
       } else {
         alert("Error uploading video. Please try again.");
       }
+    } finally {
+      setIsUploading(false);
+      setUploadProgress(0);
     }
   };
 
@@ -416,9 +434,15 @@ const AdminPanel = () => {
                 </label>
                 <select
                   value={videoForm.courseId}
-                  onChange={(e) =>
-                    setVideoForm({ ...videoForm, courseId: e.target.value })
-                  }
+                  onChange={(e) => {
+                    const courseId = e.target.value;
+                    setVideoForm({ ...videoForm, courseId });
+                    if (courseId) {
+                      fetchVideos(courseId);
+                    } else {
+                      setVideos([]);
+                    }
+                  }}
                   className="w-full p-2 border rounded"
                   required
                 >
@@ -470,11 +494,25 @@ const AdminPanel = () => {
                   required
                 />
               </div>
+              {isUploading && (
+                <div className="mb-4">
+                  <div className="w-full bg-gray-200 rounded-full h-2.5">
+                    <div
+                      className="bg-blue-600 h-2.5 rounded-full transition-all duration-300"
+                      style={{ width: `${uploadProgress}%` }}
+                    ></div>
+                  </div>
+                  <p className="text-sm text-gray-600 mt-1">
+                    Uploading: {uploadProgress}%
+                  </p>
+                </div>
+              )}
               <button
                 type="submit"
-                className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+                disabled={isUploading}
+                className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Upload Video
+                {isUploading ? "Uploading..." : "Upload Video"}
               </button>
             </form>
           </div>
@@ -484,7 +522,15 @@ const AdminPanel = () => {
             <div className="space-y-4">
               {videos.map((video) => (
                 <div key={video._id} className="border p-4 rounded">
-                  <h3 className="font-bold">{video.title}</h3>
+                  <h3
+                    className="font-bold cursor-pointer hover:text-blue-500"
+                    onClick={() => {
+                      setSelectedVideo(video);
+                      setShowPreview(true);
+                    }}
+                  >
+                    {video.title}
+                  </h3>
                   <p className="text-sm text-gray-600">{video.description}</p>
                   <div className="mt-2 flex space-x-2">
                     <button
@@ -501,6 +547,45 @@ const AdminPanel = () => {
         </div>
       )}
 
+      {/* Video Preview Modal */}
+      {showPreview && selectedVideo && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg w-11/12 max-w-4xl">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold">{selectedVideo.title}</h3>
+              <button
+                onClick={() => setShowPreview(false)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div className="aspect-w-16 aspect-h-9">
+              <video
+                controls
+                className="w-full h-full rounded-lg"
+                src={selectedVideo.videoUrl}
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <p className="mt-4 text-gray-600">{selectedVideo.description}</p>
+          </div>
+        </div>
+      )}
+
       {/* Quiz Management */}
       {activeTab === "quizzes" && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -513,9 +598,15 @@ const AdminPanel = () => {
                 </label>
                 <select
                   value={quizForm.courseId}
-                  onChange={(e) =>
-                    setQuizForm({ ...quizForm, courseId: e.target.value })
-                  }
+                  onChange={(e) => {
+                    const courseId = e.target.value;
+                    setQuizForm({ ...quizForm, courseId });
+                    if (courseId) {
+                      fetchQuizzes(courseId);
+                    } else {
+                      setQuizzes([]);
+                    }
+                  }}
                   className="w-full p-2 border rounded"
                   required
                 >
@@ -654,7 +745,15 @@ const AdminPanel = () => {
             <div className="space-y-4">
               {quizzes.map((quiz) => (
                 <div key={quiz._id} className="border p-4 rounded">
-                  <h3 className="font-bold">{quiz.title}</h3>
+                  <h3
+                    className="font-bold cursor-pointer hover:text-blue-500"
+                    onClick={() => {
+                      setSelectedQuiz(quiz);
+                      setShowQuizPreview(true);
+                    }}
+                  >
+                    {quiz.title}
+                  </h3>
                   <p className="text-sm text-gray-600">{quiz.description}</p>
                   <div className="mt-2 flex space-x-2">
                     <button
@@ -663,6 +762,64 @@ const AdminPanel = () => {
                     >
                       Delete
                     </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Quiz Preview Modal */}
+      {showQuizPreview && selectedQuiz && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg w-11/12 max-w-4xl max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold">{selectedQuiz.title}</h3>
+              <button
+                onClick={() => setShowQuizPreview(false)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+            <p className="text-gray-600 mb-6">{selectedQuiz.description}</p>
+            <div className="space-y-6">
+              {selectedQuiz.questions.map((question, index) => (
+                <div key={index} className="border p-4 rounded-lg">
+                  <h4 className="font-semibold mb-2">
+                    Question {index + 1}: {question.question}
+                  </h4>
+                  <div className="space-y-2">
+                    {question.options.map((option, optionIndex) => (
+                      <div
+                        key={optionIndex}
+                        className={`p-2 rounded ${
+                          optionIndex === question.correctAnswer
+                            ? "bg-green-100 border border-green-500"
+                            : "bg-gray-50"
+                        }`}
+                      >
+                        {option}
+                        {optionIndex === question.correctAnswer && (
+                          <span className="ml-2 text-green-600">
+                            ✓ Correct Answer
+                          </span>
+                        )}
+                      </div>
+                    ))}
                   </div>
                 </div>
               ))}

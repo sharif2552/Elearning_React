@@ -88,9 +88,9 @@ export default function Login() {
                   <img
                     className="h-5 mr-2"
                     src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/logos/logo-google.png"
-                    alt=""
+                    alt="Google logo"
                   />
-                  Login with Google
+                  Sign in with Google
                 </button>
                 <div className="flex items-center mb-3">
                   <hr className="h-0 border-b border-solid border-grey-500 grow" />

@@ -1,41 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export default function Register() {
-  const [userCredentials, setUserCredentials] = React.useState({});
+export default function Signup() {
+  const [userCredentials, setUserCredentials] = useState({
+    name: "",
+    email: "",
+    password: "",
+    adminKey: "",
+  });
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-
-  const googleLogin = () => {
-    window.location.href = `${process.env.REACT_APP_BASE_URL}api/auth/google`;
-  };
 
   const handleChange = (e) => {
     setUserCredentials({
       ...userCredentials,
       [e.target.name]: e.target.value,
     });
-    console.log(userCredentials);
   };
 
   const handleSignup = async (e) => {
     e.preventDefault();
+    setErrorMessage("");
+    setIsLoading(true);
+
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}api/auth/register`,
+        "http://localhost:5000/api/auth/register",
         userCredentials
       );
-      console.log(response.data);
-      navigate("/login");
+
+      if (response.data.token) {
+        localStorage.setItem("token", response.data.token);
+        navigate("/");
+      } else {
+        setErrorMessage("Invalid response from server");
+      }
     } catch (error) {
       if (error.response) {
-        console.error("Error response:", error.response.data);
+        setErrorMessage(error.response.data.message || "Registration failed");
       } else if (error.request) {
-        console.error("Error request:", error.request);
+        setErrorMessage("No response from server. Please try again.");
       } else {
-        console.error("Error message:", error.message);
+        setErrorMessage("An error occurred. Please try again.");
       }
-      console.error("Error config:", error.config);
+      console.error("Signup error:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -57,18 +69,6 @@ export default function Register() {
                   Sign Up
                 </h3>
                 <p className="mb-4 text-grey-700"></p>
-                <button
-                  type="button"
-                  className="flex items-center justify-center w-full py-4 mb-6 text-sm font-medium transition duration-300 rounded-2xl text-grey-900 bg-grey-300 hover:bg-grey-400 focus:ring-4 focus:ring-grey-300"
-                  onClick={googleLogin}
-                >
-                  <img
-                    className="h-5 mr-2"
-                    src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/logos/logo-google.png"
-                    alt="Google logo"
-                  />
-                  Sign up with Google
-                </button>
                 <label
                   htmlFor="name"
                   className="mb-2 text-sm text-start text-grey-900"
@@ -78,23 +78,9 @@ export default function Register() {
                 <input
                   id="name"
                   type="text"
-                  placeholder="Kamal"
                   name="name"
                   onChange={handleChange}
-                  className="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-grey-400 mb-7 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl"
-                />
-                <label
-                  htmlFor="username"
-                  className="mb-2 text-sm text-start text-grey-900"
-                >
-                  Username*
-                </label>
-                <input
-                  id="username"
-                  type="text"
-                  name="username"
-                  onChange={handleChange}
-                  placeholder="kamal1234"
+                  placeholder="Enter your name"
                   className="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-grey-400 mb-7 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl"
                 />
                 <label
@@ -139,15 +125,18 @@ export default function Register() {
                   placeholder="Enter admin key if you have one"
                   className="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none focus:bg-grey-400 placeholder:text-grey-700 bg-grey-200 text-dark-grey-900 rounded-2xl"
                 />
+                {errorMessage && (
+                  <p className="text-red-500 mb-4">{errorMessage}</p>
+                )}
                 <button
                   type="submit"
-                  className="w-full px-6 py-5 mb-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-purple-blue-600 focus:ring-4 focus:ring-purple-blue-100 bg-purple-blue-500"
+                  disabled={isLoading}
+                  className="w-full px-6 py-5 mb-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-purple-blue-600 focus:ring-4 focus:ring-purple-blue-100 bg-purple-blue-500 disabled:opacity-50"
                 >
-                  Sign Up
+                  {isLoading ? "Signing up..." : "Sign Up"}
                 </button>
-
                 <p className="text-sm leading-relaxed text-grey-900">
-                  Have an account?{" "}
+                  Already have an account?{" "}
                   <Link to={"/login"} className="font-bold text-grey-700">
                     Sign In
                   </Link>

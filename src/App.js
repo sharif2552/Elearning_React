@@ -22,39 +22,12 @@ import AdminPanel from "./pages/AdminPanel";
 import Profile from "./pages/Profile";
 
 const router = createBrowserRouter([
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/signup",
-    element: <Signup />,
-  },
-  {
-    path: "/quiz",
-    element: <Quiz />,
-  },
-  {
-    path: "/",
-    element: (
-      <ProtectedRoute>
-        <Homepage />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: "/upload",
-    element: <UploadProduct />,
-  },
-  // {
-  //   path: "/products",
-  //   element: <ProductsList />,
-  // },
-  {
-    path: "/logout",
-    element: <Logout />,
-  },
-
+  { path: "/login", element: <Login /> },
+  { path: "/signup", element: <Signup /> },
+  { path: "/quiz", element: <Quiz /> },
+  { path: "/", element: <Homepage /> },
+  { path: "/upload", element: <UploadProduct /> },
+  { path: "/logout", element: <Logout /> },
   {
     path: "/admin",
     element: (
@@ -63,36 +36,13 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
   },
-  {
-    path: "/course-list",
-    element: <CourseList />,
-  },
-  {
-    path: "/course/:id",
-    element: <CourseDetail />,
-  },
-  {
-    path: "/about-us",
-    element: <AboutUs />,
-  },
-  {
-    path: "/blog",
-    element: <Blog />,
-  },
-
-  {
-    path: "/blog/:id",
-    element: <BlogPost />,
-  },
-
-  {
-    path: "/forget-password",
-    element: <ForgetPassword />,
-  },
-  {
-    path: "/reset-password/:token",
-    element: <ForgetPasswordPage />,
-  },
+  { path: "/course-list", element: <CourseList /> },
+  { path: "/course/:id", element: <CourseDetail /> },
+  { path: "/about-us", element: <AboutUs /> },
+  { path: "/blog", element: <Blog /> },
+  { path: "/blog/:id", element: <BlogPost /> },
+  { path: "/forget-password", element: <ForgetPassword /> },
+  { path: "/reset-password/:token", element: <ForgetPasswordPage /> },
   {
     path: "/profile",
     element: (
