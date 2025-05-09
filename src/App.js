@@ -10,7 +10,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import AuthProvider from "./context/AuthContext";
 import Logout from "./components/Logout";
 import "./App.css";
-import AddCourse from "./components/AdminPanel";
+
 import CourseList from "./components/CourseList";
 import CourseDetail from "./components/CourseDetail";
 import AboutUs from "./pages/Aboutus";
@@ -18,6 +18,7 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import ForgetPassword from "./pages/PasswordResetForm";
 import ForgetPasswordPage from "./pages/PasswordResetPage";
+import AdminPanel from "./pages/AdminPanel";
 
 const router = createBrowserRouter([
   {
@@ -55,16 +56,20 @@ const router = createBrowserRouter([
 
   {
     path: "/admin",
-    element: <AddCourse />,
+    element: (
+      <ProtectedRoute>
+        <AdminPanel />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/course-list",
     element: <CourseList />,
   },
-   {
-path: "/course/:id",
-element: <CourseDetail />,
-   },
+  {
+    path: "/course/:id",
+    element: <CourseDetail />,
+  },
   {
     path: "/about-us",
     element: <AboutUs />,
@@ -73,7 +78,7 @@ element: <CourseDetail />,
     path: "/blog",
     element: <Blog />,
   },
-  
+
   {
     path: "/blog/:id",
     element: <BlogPost />,
@@ -81,15 +86,12 @@ element: <CourseDetail />,
 
   {
     path: "/forget-password",
-    element: <ForgetPassword />
+    element: <ForgetPassword />,
   },
   {
     path: "/reset-password/:token",
-    element: <ForgetPasswordPage />
+    element: <ForgetPasswordPage />,
   },
-
-  
-
 ]);
 
 function App() {
