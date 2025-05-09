@@ -1,9 +1,13 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import html2pdf from "html2pdf.js";
+import { AuthContext } from "../context/AuthContext";
+import { useContext } from "react";
 
 const ResumeBuilder = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { user, login } = useContext(AuthContext);
   const [step, setStep] = useState(1);
   const [showPreview, setShowPreview] = useState(false);
   const steps = [1, 2, 3, 4, 5, 6];
@@ -54,6 +58,28 @@ const ResumeBuilder = () => {
     date: "",
     link: "",
   });
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      // Check for token in URL
+      const params = new URLSearchParams(location.search);
+      const token = params.get("token");
+
+      if (token) {
+        // If token exists in URL, use it to login
+        await login(token);
+        // Remove token from URL without reloading
+        window.history.replaceState({}, document.title, "/resume-builder");
+      }
+    };
+
+    checkAuth();
+  }, [location, login]);
+
+  // If no user is authenticated, don't render the component
+  if (!user) {
+    return null; // This will trigger the ProtectedRoute to redirect to login
+  }
 
   const handlePersonalInfoChange = (e) => {
     setResumeData({

@@ -6,40 +6,56 @@ import { AuthContext } from "../context/AuthContext";
 
 // Animated Resume Builder Button Component
 const AnimatedResumeButton = ({ isMobile = false }) => {
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleResumeBuilderClick = (e) => {
+    e.preventDefault();
+    if (user) {
+      // Get the token from localStorage
+      const token = localStorage.getItem("token");
+      if (token) {
+        // Open in new tab with token in URL
+        const resumeBuilderUrl = `/resume-builder?token=${encodeURIComponent(
+          token
+        )}`;
+        window.open(resumeBuilderUrl, "_blank");
+      } else {
+        // If no token found, redirect to login
+        navigate("/login");
+      }
+    } else {
+      // If user is not logged in, redirect to login
+      navigate("/login");
+    }
+  };
+
   return (
     <div className="relative group">
       {/* Animated border gradient */}
       <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-600 via-indigo-500 to-blue-500 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-500 animate-gradient"></div>
 
-      <Link
-        to="/resume-builder" target="_blank"
-        className={`relative bg-black text-white ${
-          isMobile ? "text-3xl" : ""
-        } font-bold px-6 py-2 rounded-lg transform transition-all duration-300 shadow-lg flex items-center justify-center overflow-hidden hover:shadow-xl hover:shadow-violet-500/20 text-black hover:text-secondary-replyOrange-900`}
+      <button
+        onClick={handleResumeBuilderClick}
+        className={`relative flex items-center gap-2 px-4 py-2 bg-black text-white rounded-lg overflow-hidden ${
+          isMobile ? "w-full justify-center" : ""
+        }`}
       >
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-r from-violet-600 via-indigo-500 to-blue-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-
-        {/* Subtle shine effect */}
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-
-        <span className="relative z-10 flex items-center gap-2">
-          <span className="relative">Resume Builder</span>
-          <svg
-            className="w-5 h-5 transition-transform duration-300 group-hover:rotate-12"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M13 10V3L4 14h7v7l9-11h-7z"
-            />
-          </svg>
-        </span>
-      </Link>
+        <span className="relative z-10">Resume Builder</span>
+        <svg
+          className="w-5 h-5 relative z-10"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M13 7l5 5m0 0l-5 5m5-5H6"
+          />
+        </svg>
+      </button>
     </div>
   );
 };
@@ -166,10 +182,12 @@ const Navbar = () => {
         <nav className="container mx-auto flex justify-between p-2">
           {/* Logo */}
           <div className="flex items-center space-x-5">
-            <img src={logo} alt="logo" className="w-20 h-20" />
-            <h1 className="text-black text-4xl font-bold font-raleway">
-              EduWise
-            </h1>
+            <Link to="/" className="flex items-center space-x-5">
+              <img src={logo} alt="logo" className="w-20 h-20" />
+              <h1 className="text-black text-4xl font-bold font-raleway">
+                EduWise
+              </h1>
+            </Link>
           </div>
 
           {/* Mobile menu toggle */}

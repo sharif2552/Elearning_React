@@ -26,11 +26,15 @@ const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      fetchUserData(token);
-    }
-    setLoading(false);
+    const initializeAuth = async () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        await fetchUserData(token);
+      }
+      setLoading(false);
+    };
+
+    initializeAuth();
   }, []);
 
   const login = async (token) => {
@@ -43,8 +47,27 @@ const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
+  // Add a function to check if token is valid
+  const isTokenValid = async (token) => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/users/profile",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return !!response.data;
+    } catch (error) {
+      return false;
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout }}>
+    <AuthContext.Provider
+      value={{ user, loading, login, logout, isTokenValid }}
+    >
       {children}
     </AuthContext.Provider>
   );
