@@ -13,6 +13,7 @@ import "./App.css";
 
 import CourseList from "./pages/CourseList";
 import CourseDetail from "./pages/CourseDetail";
+import CourseContent from "./pages/CourseContent";
 import AboutUs from "./pages/Aboutus";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
@@ -38,6 +39,14 @@ const router = createBrowserRouter([
   },
   { path: "/course-list", element: <CourseList /> },
   { path: "/course/:id", element: <CourseDetail /> },
+  {
+    path: "/course-content/:id",
+    element: (
+      <ProtectedRoute>
+        <CourseContent />
+      </ProtectedRoute>
+    ),
+  },
   { path: "/about-us", element: <AboutUs /> },
   { path: "/blog", element: <Blog /> },
   { path: "/blog/:id", element: <BlogPost /> },
