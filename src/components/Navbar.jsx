@@ -4,6 +4,46 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/img/navbar/logo.png";
 import { AuthContext } from "../context/AuthContext";
 
+// Animated Resume Builder Button Component
+const AnimatedResumeButton = ({ isMobile = false }) => {
+  return (
+    <div className="relative group">
+      {/* Animated border gradient */}
+      <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-600 via-indigo-500 to-blue-500 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-500 animate-gradient"></div>
+
+      <Link
+        to="/resume-builder" target="_blank"
+        className={`relative bg-black text-white ${
+          isMobile ? "text-3xl" : ""
+        } font-bold px-6 py-2 rounded-lg transform transition-all duration-300 shadow-lg flex items-center justify-center overflow-hidden hover:shadow-xl hover:shadow-violet-500/20 text-black hover:text-secondary-replyOrange-900`}
+      >
+        {/* Background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-r from-violet-600 via-indigo-500 to-blue-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+
+        {/* Subtle shine effect */}
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+
+        <span className="relative z-10 flex items-center gap-2">
+          <span className="relative">Resume Builder</span>
+          <svg
+            className="w-5 h-5 transition-transform duration-300 group-hover:rotate-12"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M13 10V3L4 14h7v7l9-11h-7z"
+            />
+          </svg>
+        </span>
+      </Link>
+    </div>
+  );
+};
+
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -30,6 +70,46 @@ const Navbar = () => {
 
   return (
     <div>
+      {/* Add the animation keyframes to the document */}
+      <style>
+        {`
+          @keyframes gradient {
+            0% {
+              background-position: 0% 50%;
+            }
+            50% {
+              background-position: 100% 50%;
+            }
+            100% {
+              background-position: 0% 50%;
+            }
+          }
+          @keyframes bounce-slow {
+            0%, 100% {
+              transform: translateY(0);
+            }
+            50% {
+              transform: translateY(-3px);
+            }
+          }
+          .animate-gradient {
+            background-size: 200% 200%;
+            animation: gradient 3s ease infinite;
+          }
+          .animate-bounce-slow {
+            animation: bounce-slow 2s ease-in-out infinite;
+          }
+          @keyframes shine {
+            0% {
+              transform: translateX(-100%);
+            }
+            100% {
+              transform: translateX(100%);
+            }
+          }
+        `}
+      </style>
+
       {/* Overlay for mobile menu */}
       <div
         className="fixed top-0 left-0 w-full h-full z-50 bg-black opacity-50 backdrop-filter backdrop-blur-md"
@@ -57,12 +137,6 @@ const Navbar = () => {
               Courses
             </Link>
             <Link
-              to="/resume-builder"
-              className="text-white text-3xl font-raleway hover:text-secondary-replyOrange-900"
-            >
-              Resume Builder
-            </Link>
-            <Link
               to="/blog"
               className="text-white text-3xl font-raleway hover:text-secondary-replyOrange-900"
             >
@@ -74,6 +148,7 @@ const Navbar = () => {
             >
               About Us
             </Link>
+            <AnimatedResumeButton isMobile={true} />
             {user && (
               <Link
                 to="/admin"
@@ -126,12 +201,6 @@ const Navbar = () => {
               Courses
             </Link>
             <Link
-              to="/resume-builder"
-              className="text-black hover:text-secondary-replyOrange-900 text-xl"
-            >
-              Resume Builder
-            </Link>
-            <Link
               to="/blog"
               className="text-black hover:text-secondary-replyOrange-900 text-xl"
             >
@@ -143,6 +212,7 @@ const Navbar = () => {
             >
               About Us
             </Link>
+            <AnimatedResumeButton />
           </div>
 
           {/* Conditional rendering for Login/Register or Profile */}
