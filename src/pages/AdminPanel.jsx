@@ -11,6 +11,8 @@ const AdminPanel = () => {
   const [showPreview, setShowPreview] = useState(false);
   const [selectedQuiz, setSelectedQuiz] = useState(null);
   const [showQuizPreview, setShowQuizPreview] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   // Course form states
   const [courseForm, setCourseForm] = useState({
@@ -225,14 +227,32 @@ const AdminPanel = () => {
     }
   };
 
-  const handleDelete = async (courseId) => {
+  const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/courses/${courseId}`);
-      setCourses(courses.filter((course) => course._id !== courseId));
-      alert("Course deleted successfully");
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setError("Please login to delete courses");
+        return;
+      }
+
+      const response = await axios.delete(
+        `http://localhost:5000/api/courses/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        setCourses(courses.filter((course) => course._id !== id));
+        setSuccess("Course deleted successfully");
+        setTimeout(() => setSuccess(""), 3000); // Clear success message after 3 seconds
+      }
     } catch (error) {
       console.error("Error deleting course:", error);
-      alert("Error deleting course");
+      setError(error.response?.data?.message || "Error deleting course");
+      setTimeout(() => setError(""), 3000); // Clear error message after 3 seconds
     }
   };
 
@@ -292,6 +312,18 @@ const AdminPanel = () => {
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-4xl font-bold text-center mb-8">Admin Panel</h1>
+
+      {error && (
+        <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+          {error}
+        </div>
+      )}
+
+      {success && (
+        <div className="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
+          {success}
+        </div>
+      )}
 
       {/* Navigation Tabs */}
       <div className="flex border-b mb-8">

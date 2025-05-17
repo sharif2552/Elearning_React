@@ -11,7 +11,8 @@ const BlogPost = () => {
     date: "June 15, 2024",
     content:
       "Closures are a fundamental concept in JavaScript that every developer should understand. In this post, we will explore what closures are, how they work, and why they are useful...",
-    imageUrl: "https://via.placeholder.com/600x400",
+    imageUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStl_SKDMPEgoJzK4EUrcHQ2fFmy6QR2DXguA&s",
   };
 
   return (
