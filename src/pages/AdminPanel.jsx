@@ -258,12 +258,30 @@ const AdminPanel = () => {
 
   const handleDeleteVideo = async (videoId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/videos/${videoId}`);
-      setVideos(videos.filter((video) => video._id !== videoId));
-      alert("Video deleted successfully");
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setError("Please login to delete videos");
+        return;
+      }
+
+      const response = await axios.delete(
+        `http://localhost:5000/api/videos/${videoId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        setVideos(videos.filter((video) => video._id !== videoId));
+        setSuccess("Video deleted successfully");
+        setTimeout(() => setSuccess(""), 3000);
+      }
     } catch (error) {
       console.error("Error deleting video:", error);
-      alert("Error deleting video");
+      setError(error.response?.data?.message || "Error deleting video");
+      setTimeout(() => setError(""), 3000);
     }
   };
 
