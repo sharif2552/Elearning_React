@@ -28,7 +28,7 @@ const AboutUs = () => {
               <div className="flex-shrink-0">
                 <img
                   className="h-12 w-12"
-                  src="https://via.placeholder.com/150"
+                  src="https://img.freepik.com/premium-vector/digital-hand-touching-technology-polygonal-wireframe-art_201274-495.jpg?w=740"
                   alt="Company Icon"
                 />
               </div>
@@ -46,7 +46,7 @@ const AboutUs = () => {
               <div className="flex-shrink-0">
                 <img
                   className="h-12 w-12"
-                  src="https://via.placeholder.com/150"
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSebWTR5DNSPhuWhBHwQr6XJjFzpnUd1v5NBtJbH9mmvsbZEUoexK446y2p9k0pa4AZK1U&usqp=CAU"
                   alt="Company Icon"
                 />
               </div>
@@ -71,8 +71,8 @@ const AboutUs = () => {
             <div className="mt-12 grid gap-8 lg:grid-cols-3 lg:gap-16">
               <div className="flex flex-col items-center bg-white shadow-xl rounded-lg p-8">
                 <img
-                  className="h-24 w-24 rounded-full"
-                  src="https://via.placeholder.com/150"
+                  className="h-24 rounded-full"
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCJOxssU3TRhutaiO3s3733_IH4YHOdCS6hg&s"
                   alt="Team Member"
                 />
                 <h4 className="mt-6 text-xl font-bold text-gray-900">
@@ -83,8 +83,8 @@ const AboutUs = () => {
 
               <div className="flex flex-col items-center bg-white shadow-xl rounded-lg p-8">
                 <img
-                  className="h-24 w-24 rounded-full"
-                  src="https://via.placeholder.com/150"
+                  className="h-24 rounded-full"
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2YW7Zy5REaNG3AtyjW16133SzbkYPjgtlQ-oLggIDLf6iFRb2m0UtHzQzqiljdFZ2gLQ&usqp=CAU"
                   alt="Team Member"
                 />
                 <h4 className="mt-6 text-xl font-bold text-gray-900">
@@ -95,8 +95,8 @@ const AboutUs = () => {
 
               <div className="flex flex-col items-center bg-white shadow-xl rounded-lg p-8">
                 <img
-                  className="h-24 w-24 rounded-full"
-                  src="https://via.placeholder.com/150"
+                  className="h-24 rounded-full"
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa3i-AqfPdxvCZEIBz_At04R_4At4QEaXKan0C7F6aFVZXfW9bZ9reEx--78QJXpRIbRM&usqp=CAU"
                   alt="Team Member"
                 />
                 <h4 className="mt-6 text-xl font-bold text-gray-900">

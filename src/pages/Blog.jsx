@@ -11,7 +11,8 @@ const Blog = () => {
       date: "June 15, 2024",
       excerpt:
         "Closures are a fundamental concept in JavaScript that every developer should understand. In this post, we will explore what closures are, how they work, and why they are useful.",
-      imageUrl: "https://via.placeholder.com/600x400",
+      imageUrl:
+        "https://cdn.prod.website-files.com/610bb663a35dd3364ddbf08c/6217944a3023542e3a3ecebc_javascript-closures.png",
     },
     {
       id: 2,
@@ -20,7 +21,8 @@ const Blog = () => {
       date: "June 10, 2024",
       excerpt:
         "Responsive design is crucial for modern web development. Learn how to create responsive layouts easily using Tailwind CSS.",
-      imageUrl: "https://via.placeholder.com/600x400",
+      imageUrl:
+        "https://cdnblog.webkul.com/blog/wp-content/uploads/2024/05/tailwindcss-1633184775.webp",
     },
     {
       id: 3,
@@ -29,7 +31,8 @@ const Blog = () => {
       date: "June 5, 2024",
       excerpt:
         "Online learning can be challenging. Here are our top 10 tips to help you stay motivated and succeed in your online courses.",
-      imageUrl: "https://via.placeholder.com/600x400",
+      imageUrl:
+        "https://blogassets.leverageedu.com/blog/wp-content/uploads/2020/03/24185535/Online-Learning.jpg",
     },
   ];
 
